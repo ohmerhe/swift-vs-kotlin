@@ -314,13 +314,13 @@ class SomeClass {
 }
 ```
 
-然后可以创建这个类的实例：
+然后可以用以下方式创建这个类的实例：
 
 ```swift
 let instance = SomeClass()
 ```
 
-### 构造函数和析构函数
+### 构造函数（初始化器）
 
 构造函数也可以叫做初始化器（Initializer）  
 用 `init` 关键字来定义类的构造函数
@@ -334,6 +334,23 @@ class SomeClass {
 
 let instance = SomeClass(string: "KotlinThree")
 ```
+
+如果类含有成员变量，在类初始化时，必须保证所有成员变量都被初始化。
+对于 Optional 类型的成员变量，如果没有显式地初始化，编译器会自动把它初始化为 nil。对于非 Optional 类型的成员变量，必须显式地初始化。
+
+```swift
+class SomeClass {
+    let number: Int
+    let defaultValueNumber = 3
+    let optionalString: String?
+
+    init() {
+        number = 1
+    }
+}
+```
+
+### 析构函数
 
 用 `deinit` 关键字来定义析构函数，析构函数在类销毁时调用。
 
@@ -386,17 +403,17 @@ KotlinThree
 
 ```swift
 class SomeClass {
-	class func classMethod() {
+    class func classMethod() {
+    
+    }
 	
-	}
+    static func cannotBeOverridedClassMethod() {
 	
-	static func cannotBeOverridedClassMethod() {
+    }
 	
-	}
+    func instanceMethod() {
 	
-	func instanceMethod() {
-	
-	}
+    }
 }
 
 // 调用类方法
@@ -429,14 +446,87 @@ let instance = SomeClass()
 instance.baseFunction()
 ```
 
+如果不想让一个类能被继承，可以在声明类时加上 `final` 关键字
+
+```swift
+final class BaseClass {}
+```
+
+另外如果两个类分辨属于不同的模块，基类必须用 `open` 关键字修饰才能被另一个模块的类继承。
+
+### 方法覆盖
+
 子类如果需要复写父类的方法，需要用 `override` 关键字来修饰
 
-```
+```swift
 class SomeClass: BaseClass {
     override func baseFunction() {
         // ...
     }
 }
+```
+
+子类方法调用父类的相同方法，用 `super` 关键字，例如：
+
+```swift
+class SomeClass: BaseClass {
+    override func baseFunction() {
+        super.baseFunction()
+        // ...
+    }
+}
+```
+
+覆盖父类初始化器的步骤：
+
+1. 初始化子类的所有成员变量
+2. 用 super 调用父类的初始化器
+3. 一些额外的操作
+
+```swift
+class SomeClass: BaseClass {
+    let text: String
+
+    override init() {
+        text = "abc"
+        super.init()
+        loadData()
+    }
+}
+```
+
+### 类的嵌套
+
+Swift 中可以在类中再定义一个类
+
+```
+class SomeClass {
+
+    class AnotherClass {
+
+    }
+}
+```
+
+可以用 `.` 号的方式来在外面实例化里面嵌套的类
+
+```swift
+let instance = SomeClass.AnotherClass()
+```
+
+也可以给 AnotherClass 加上 `private`，这样就无法再外面实例化了，只能在 SomeClass 这个类中实例化。
+
+```swift
+class SomeClass {
+
+    private class AnotherClass {
+
+    }
+
+    private let instance = AnotherClass() // 可以编译通过
+}
+
+let instance = SomeClass.AnotherClass() // 无法编译通过
 ```
 
 
