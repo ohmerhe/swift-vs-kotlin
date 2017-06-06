@@ -2,6 +2,224 @@
 
 # 技术漫谈
 
+**Kotlin:**
+
+Swift 君，你好。😏
+
+**Swift:**
+
+Kotlin 君，你好。🙂，干嘛笑的那么坏。
+
+**Kotlin:**
+
+没有什么，你最近是不是胖了。
+
+**Swift:**
+
+😓赶紧进入正题吧，说说你们的类是怎么定义的。
+
+**Kotlin:**
+
+👌我们定义类和 Java 差不多，也是用 `class` 声明一个类，不过 Kotlin 里面如果类实体没有什么内容的话，可以不要大括号。
+
+**Swift:**
+
+哦哦，不要大括号，那好简洁啊，我们不行。不过我们实例化的时候可以不用 new。也就是 Swift 程序员不用 new 就可以有对象了😍。
+
+**Kotlin:**
+
+嘿，正经点，你都是有老婆的人了。不过这个我们也有😜，我们 Kotlin 程序员也可以不 new 就有对象了😄。
+
+Kotlin 的构造函数分为主构造函数和次构造函数。主构造函数是和类名称一起写在类头部，次构造函数是写在类体里面的。它们都是用 `constructor` 修饰。不过在定义主构造函数时，如果没有注解什么的，就可以不写了，所以看起来还是很👍的。
+
+```kotlin
+class Person constructor(firstName: String) {
+}
+
+class Person(firstName: String)
+```
+
+**Swift:**
+
+🤔，和 Swift 的概念差不过，我们叫「指定初始化器」（Designated Initialize）和「便捷初始化器」（Convenience Initializer）。都是写在类里面的，指定初始化器用 `init` 修饰，便捷初始化器需要再加个 `convenience` 关键字。
+
+```swift
+class SomeClass {
+    private let string: String
+    
+    init(string: String) {
+        self.string = string
+    }
+    
+    convenience init() {
+        self.init(string: "KotlinThree")
+    }
+    
+    func printString() {
+        print(string)
+    }
+}
+```
+
+哎，你们这样主构造函数的初始化代码写在哪里。
+
+**Kotlin:**
+
+👍，这个问题问的太好了，我们主构造函数不能写代码😂。不过 Kotlin 提供了以 init 为关键字的初始化块用来写初始化代码，以解决主构造函数不能写代码的问题。
+
+```kotlin
+class Customer(name: String) {
+    init {
+        logger.info("Customer initialized with value ${name}")
+    }
+}
+```
+
+Kotlin 的次构造函数必须直接或间接（通过其他次构造函数）委托给主构造函数，委托到同一个类的另一个构造函数用 this 关键字，你们应该也有这个限制吧。
+
+**Swift:**
+
+是的，Swift 便捷初始化器需要去调用指定初始化器来完成初始化。听说你们可以用构造函数的参数定义类的属性。
+
+**Kotlin:**
+
+哟，🙆。Kotlin 可以通过在主构造函数参数前面添加 val 或者 var 修饰符，这样主构造函数的参数就变成了类的属性，这样就不需要再在类里面定义同样的属性再赋值了。
+
+**Swift:**
+
+666，👏。
+
+Swift 有类方法和实例方法，用 class 或 static 关键字修饰的方法就是类方法，这两个关键字的区别是 class 修饰的类方法可以被子类复写，static 修饰的类方法不行。既没用 class 修饰，也没用 static 修饰的就是实例方法。
+
+**Kotlin:**
+
+Kotlin 里面已经没有类方法的概念了。🤔不过，Kotlin 中可以用 object 关键字直接定义一个对象，在类内部，我们可以用 companion 为类声明一个伴生对象。伴生对象的成员可通过只使用类名作为限定符来调用，伴生对象的成员看起来像 Java 的静态成员，在运行时他们仍然是真实对象的实例成员。在 JVM 平台，如果使用 @JvmStatic 注解，你可以将伴生对象的成员生成为真正的静态方法和字段。
+
+不过你们的类方法还可以被子类重写，这个在 Java 里也不行。诶，说说你们类是怎么继承的啊。
+
+**Swift**
+
+Swift 中用 `:` 来声明类的继承关系，你们也是用冒号来继承一个类吧？
+
+**Kotlin:**
+
+是的，再也不用区分 `extends` 还是 `implements` 了。在 Kotlin 里面，所有的非抽象类默认都是静态的，也就是相当于 Java 中的 final。如果想要让某个类可以被继承，必须要现式的为该类添加 open 的关键字，该关键字提供了和 Java 中 final 相反的功能。
+
+**Swift:**
+
+😯，为什么要区分？
+
+**Kotlin:**
+
+因为在 Java 继承类和继承接口使用不同的关键字。
+
+**Swift:**
+
+Swift 类不能直接继承协议，只能扩展一个协议，所以没有这样的问题。Swift 里面如果不想让一个类能被继承，可以在声明类时加上 final 关键字。另外如果两个类分辨属于不同的模块，基类必须用 open 关键字修饰才能被另一个模块的类继承。
+
+**Kotlin:**
+
+那你们有没有抽象类的概念啊。
+
+**Swift:**
+
+👋没有。
+
+**Kotlin:**
+
+Kotlin 不但类默认是静态的，函数也是静态的，如果一个函数需要被重写，我们必须手动让他变成开放的，即在函数前面添加 open 关键字。如果子类想要重写某个方法，必须用 override 关键字修饰该方法，否则会报错。被 override 修饰的函数默认也是开放的，如果不想它再被继承，需要 final 来修饰该函数。
+
+**Swift:**
+
+Swift 函数倒是不需要，不过也需要用 override 关键字来修饰。构造函数的覆盖也是一样的，子类覆盖父类初始化器的步骤：
+
+- 初始化子类的所有成员变量
+- 用 super 调用父类的初始化器
+- 一些额外的操作
+
+```swift
+class SomeClass: BaseClass {
+    let text: String
+
+    override init() {
+        text = "abc"
+        super.init()
+        loadData()
+    }
+}
+```
+
+**Kotlin:**
+
+Kotlin 如果有主构造函数的话，是直接在父类名称后面传递对应的参数。如果类没有主构造函数，那么每个次构造函数必须 使用 super 关键字初始化其基类型，或委托给另一个构造函数做到这一点。 注意，在这种情况下，不同的次构造函数可以调用基类型的不同的构造函数：
+
+```kotlin
+class Derived(p: Int) : Base(p)
+
+class MyView : View {
+    constructor(ctx: Context) : super(ctx)
+
+    constructor(ctx: Context, attrs: AttributeSet) : super(ctx, attrs)
+}
+```
+
+Kotlin 属性覆盖和函数覆盖类似，需要使用 open 和 override 关键字，覆盖属性的类型必须兼容。可以用 var 属性覆盖 val 属性，反过来却不行。这是因为 var 本质上是多声明了一个 setter 方法。
+
+**Swift:**
+
+Swift 中储值属性不能覆盖，只能覆盖父类的计算属性，同样需要加上 override 关键字，不过属性覆盖用的不是很多。
+
+**Kotlin:**
+
+Swift 如果实现多个接口，会不会有不同协议带来同名函数的冲突的问题。😏
+
+**Swift:**
+
+Swift 如果有同样的名字 IDE 会报错，所以不同的协议如果被同一个类实现不能用同样的名字。😔
+
+**Kotlin:**
+
+😎Kotlin 可以，Kotlin 有一套规则来处理这样的冲突。在 Kotlin 中，如果一个类从它的直接超类继承相同成员的多个实现（由于接口函数可以有实现），它必须覆盖这个成员并提供其自己的实现。 为了表示采用从哪个超类型继承的实现，我们使用由尖括号中超类型名限定的 super，如 super。
+
+```kotlin
+open class A {
+    open fun f() { print("A") }
+    fun a() { print("a") }
+}
+
+interface B {
+    fun f() { print("B") } // interface members are 'open' by default
+    fun b() { print("b") }
+}
+
+class C() : A(), B {
+    // The compiler requires f() to be overridden:
+    override fun f() {
+        super<A>.f() // call to A.f()
+        super<B>.f() // call to B.f()
+    }
+}
+```
+
+**Swift:**
+
+这个不错，可以不怕名字冲突了。给你们手动点个赞 👍。
+
+**Kotlin:**
+
+😳，Kotlin 里面还新增了嵌套类的概念，就是可以直接在类体里面另外一个类，其实就是之前 Java 里面的静态内部类。这种写法在 Java 里面就是定义内部类，在 Kotlin 里面要定义内部类反而要加上 `Inner` 关键字。
+
+**Swift:**
+
+Swift 没有内部类的概念。😓
+
+**Kotlin:**
+
+🤗你们没有抽象类，也没有内部类，不过你们的协议好像有很多玩法。下次听你给我好好讲讲你们的协议是怎么样的？
+
+**Swift:**
+
+🤔好的，没有问题。
 
 
 # 技术知识
@@ -171,7 +389,7 @@ class Child : MyInterface {
 默认类的函数也是静态的，如果一个函数需要被重写，我们必须手动让他变成开放的，即在函数前面添加 `open` 关键字。如果子类想要重写某个方法，必须用 `override` 关键字修饰该方法，否则会报错。
 
 ```kotlin
-pen class Base {
+open class Base {
     open fun v() {}
     fun nv() {}
 }
@@ -528,6 +746,3 @@ class SomeClass {
 
 let instance = SomeClass.AnotherClass() // 无法编译通过
 ```
-
-
-
