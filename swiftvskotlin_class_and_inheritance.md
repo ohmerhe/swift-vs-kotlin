@@ -27,7 +27,7 @@ Kotlin 君，你好。🙂，干嘛笑的那么坏。
 
 **Swift:**
 
-哦哦，不要大括号，那好简洁啊，我们不行。不过我们实例化的时候可以不用 new。也就是 Swift 程序员不用 new 就可以有对象了😍。
+哦哦，不要大括号，那好简洁啊，我们不行。不过我们实例化的时候可以不用 new 关键字。也就是 Swift 程序员不用 new 就可以有对象了😍。
 
 **Kotlin:**
 
@@ -149,6 +149,7 @@ class SomeClass: BaseClass {
         super.init()
         loadData()
     }
+    ...
 }
 ```
 
@@ -234,7 +235,7 @@ Swift 没有内部类的概念。😓
 Kotlin 使用 `class` 关键字声明类。
 
 ```kotlin
-class A{
+class A {
 }
 ```
 
@@ -535,11 +536,14 @@ class SomeClass {
 }
 ```
 
+
 然后可以用以下方式创建这个类的实例：
 
 ```swift
 let instance = SomeClass()
 ```
+
+**PS:  Swift 中没有 NSObject 的基类概念**
 
 ### 构造函数（初始化器）
 
@@ -570,6 +574,7 @@ class SomeClass {
     }
 }
 ```
+
 
 ### 析构函数
 
@@ -674,6 +679,35 @@ final class BaseClass {}
 ```
 
 另外如果两个类分辨属于不同的模块，基类必须用 `open` 关键字修饰才能被另一个模块的类继承。
+
+**PS: Swift3 提供了五个访问控制的关键字 `open``public` `private` `fileprivate` `internal` 
+用来控制访问级别，`internal`表示在模块内部可以完全访问，在模块外部不行，`fileprivate` 限定只能在当前的源文件中使用** 
+
+
+### 必要初始化器
+
+必要初始化器（Required Initializers）使用 `required` 来修饰表明，如果子类继承父类都必须实现该初始化器。如果不使用指定初始化器，则无需显示写出。
+
+```
+class BaseClass {
+    
+    public var string: String
+    required init() {
+        string = "string"
+    }
+    
+}
+
+class SomeClass: BaseClass {
+    
+    required init() {} //如不实现则报错， 如不创建指定初始化器则可以省略
+    
+    init(label: String) {
+        super.init()
+    }
+}
+
+```
 
 ### 方法覆盖
 
