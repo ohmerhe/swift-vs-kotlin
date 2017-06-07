@@ -21,7 +21,7 @@ Kotlin 君，你好。🙂，干嘛笑的那么坏。
 **Kotlin:**
 
 👌我们定义类和 Java 差不多，也是用 `class` 声明一个类，不过 Kotlin 里面如果类实体没有什么内容的话，可以不要大括号。
-
+
 **Swift:**
 
 哦哦，不要大括号，那好简洁啊，我们不行。不过我们实例化的时候可以不用 new。也就是 Swift 程序员不用 new 就可以有对象了😍。
@@ -41,7 +41,7 @@ class Person(firstName: String)
 
 **Swift:**
 
-🤔，和 Swift 的概念差不过，我们叫「指定初始化器」（Designated Initialize）和「便捷初始化器」（Convenience Initializer）。都是写在类里面的，指定初始化器用 `init` 修饰，便捷初始化器需要再加个 `convenience` 关键字。
+🤔，和 Swift 的概念差不过，我们叫「指定初始化器」（Designated Initializer）和「便捷初始化器」（Convenience Initializer）。都是写在类里面的，指定初始化器用 `init` 修饰，便捷初始化器需要再加个 `convenience` 关键字。
 
 ```swift
 class SomeClass {
@@ -115,7 +115,7 @@ Swift 中用 `:` 来声明类的继承关系，你们也是用冒号来继承一
 
 **Swift:**
 
-Swift 类不能直接继承协议，只能扩展一个协议，所以没有这样的问题。Swift 里面如果不想让一个类能被继承，可以在声明类时加上 final 关键字。另外如果两个类分辨属于不同的模块，基类必须用 open 关键字修饰才能被另一个模块的类继承。
+Swift 中继承类和实现协议也都是用同一个 `:` 符号。Swift 里面如果不想让一个类能被继承，可以在声明类时加上 final 关键字。另外如果两个类分辨属于不同的模块，基类必须用 open 关键字修饰才能被另一个模块的类继承。
 
 **Kotlin:**
 
