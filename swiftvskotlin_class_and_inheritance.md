@@ -1,5 +1,8 @@
 # Swift vs. Kotlin 漫谈系列之类与继承
 
+
+Kotlin 君和 Swift 君在一个团队一起开发已经很久了，由于平台的差异性，他们经常会进行一些技术上的交流（PK），「Kotlin vs. Swift」课程就是他们在互相切磋是的语录。内容会由简及深，慢慢深入。
+
 # 技术漫谈
 
 **Kotlin:**
@@ -12,7 +15,7 @@ Kotlin 君，你好。🙂，干嘛笑的那么坏。
 
 **Kotlin:**
 
-没有什么，你最近是不是胖了。
+没有什么，你最近是不是胖了。🙃
 
 **Swift:**
 
@@ -111,7 +114,7 @@ Swift 中用 `:` 来声明类的继承关系，你们也是用冒号来继承一
 
 **Kotlin:**
 
-因为在 Java 继承类和继承接口使用不同的关键字。
+因为在 Java 继承类和实现接口使用不同的关键字。
 
 **Swift:**
 
@@ -746,3 +749,15 @@ class SomeClass {
 
 let instance = SomeClass.AnotherClass() // 无法编译通过
 ```
+
+## 关于《Swift vs. Kotlin 漫谈》系列
+
+- 《Swift vs. Kotlin 漫谈》系列之变量定义
+- 《Swift vs. Kotlin 漫谈》系列之函数定义
+- 《Swift vs. Kotlin 漫谈》系列之控制流
+- 《Swift vs. Kotlin 漫谈》系列之基本类型
+
+《Swift vs. Kotlin 漫谈》系列是由 KotlinThree 发起的，旨在把 Swift 和 Kotlin 进行一个全面的对比，帮助 iOS 和 Android 开发对彼此的语言之间有一个更加深入的认识。如果你有兴趣可以关注我们公众号，也可以通过「原文链接」查看详情。
+
+---
+![](http://7xpox6.com1.z0.glb.clouddn.com/kotlin-three-wechat.jpg)
