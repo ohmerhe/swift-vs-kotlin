@@ -1,10 +1,29 @@
-# Swift vs. Kotlin 漫谈之接口
+# Swift vs. Kotlin 漫谈系列之接口
 
-## Protocol
+Kotlin 君和 Swift 君在一个团队一起开发已经很久了，由于平台的差异性，他们经常会进行一些技术上的交流（PK），「Kotlin vs. Swift」课程就是他们在互相切磋是的语录。内容会由简及深，慢慢深入。
+
+# 技术漫谈
+
+**Kotlin:**
+
+- static 和 class 有什么分别
+- required 是腰子子类必须复写方法？
+- 扩展与实现协议的差别
+- 协议合成，你们有typealias吗
+- 有哪些限制，只能被类实现的协议？
+
+**Swift:**
+
+## Kotlin
+
+
+## Swift
+
+### Protocol
 
 `Swift` 是一门支持面向协议编程的语言，在 `Swift` 语言中，协议被赋予了更多的功能和更广阔的使用空间。恰逢苹果发布了 `swift 4`，以下都是基于最新的 `swift 4` 语法进行讲述。
 
-### 协议语法
+#### 协议语法
 
 协议声明：
 
@@ -24,7 +43,7 @@ struct SomeStructure: FirstProtocol, AnotherProtocol {
 ```
 需要注意的是，如果某个类在符合某个协议的同时又继承自某个父类，应将其父类名放在其符合的协议名之前。
 
-### 协议属性声明
+#### 协议属性声明
 
 协议中可以声明符合此协议的类型必须实现的属性：
 
@@ -46,7 +65,7 @@ protocol AnotherProtocol {
 }
 ```
 
-### 协议方法声明
+#### 协议方法声明
 
 协议可以要求遵循协议的类型实现某些指定的实例方法或类方法。需要注意的是，不支持为协议中的方法的参数提供默认值。
 
@@ -99,7 +118,7 @@ class SomeClass: SomeProtocol {
 
 协议还可以为遵循协议的类型定义可失败构造器。
 
-### 委托（代理）模式
+#### 委托（代理）模式
 
 `Swift` 可以使用 `Protocol` 来实现委托（代理）模式，委托（代理）模式允许类或结构体将一些需要它们负责的功能委托给其他类型的实例，如下：
 
@@ -128,7 +147,7 @@ person.delegate = Intermediary()
 person.rentHouse()
 // lucy 请 lily 帮她租一套房子
 ```
-### 通过扩展遵循协议
+#### 通过扩展遵循协议
 
 可以通过扩展令已有类型遵循并符合协议：
 
@@ -168,7 +187,7 @@ print(squareTextRepresentable.textualDescription)
 // The square's width is 3
 ```
 
-### 协议类型
+#### 协议类型
 
 尽管协议本身并未实现任何功能，但是协议可以被当做一个成熟的类型来使用。
 协议类型也可以在数组或者字典这样的集合中使用：
@@ -179,7 +198,7 @@ for thing in things {
     print(thing.textualDescription)
 }
 ```
-### 协议的继承
+#### 协议的继承
 
 协议能够继承一个或多个其他协议，可以在继承的协议的基础上增加新的要求：
 
@@ -210,7 +229,7 @@ protocol SomeClassOnlyProtocol: AnyObject, SomeInheritedProtocol {
 }
 ```
 
-### 协议合成
+#### 协议合成
 
 可以采用 `&` 符号将多个协议进行组合：
 
@@ -261,7 +280,7 @@ beginConcert(in: seattle)
 ```
 这里的 `beginConcert(in:)` 函数的参数要求是 `Location` 的子类，且必须符合 `Named` 协议.
 
-### 检查协议一致性
+#### 检查协议一致性
 
 可以通过 `is` `as?` `as` 来检查某个实例是否符合某个协议：
 
@@ -276,7 +295,7 @@ for thing in things {
 }
 ```
 
-### 可选协议
+#### 可选协议
 
 原生的 `Swift protocol` 里没有可选项，所有定义的方法都是必须实现的。如果想要像 `Objective-C` 里那样定义可选的接口方法，就需要在 `protocol` 定义之前加上 `@objc`，将 `protocol` 变为 `Objective-C` 的。然后使用 `optional` 关键字来声明某些方法或属性在符合该协议的类中可以不实现，如下：
 
@@ -288,7 +307,7 @@ for thing in things {
 ```
 需要注意的是，标记为 `@objc` 的 `protocol` 只能被 `class` 实现，不能被 `struct` 和 `enum` 类型实现，而且实现它的 `class` 中的方法还必须也被标注为 `@objc`，或者整个类就是继承自 `NSObject`。这还是很蛋疼的。
 
-### 协议扩展
+#### 协议扩展
 
 协议可以通过扩展来为遵循协议的类型提供属性和方法的实现，即使协议中没有声明。这样就无需在每个遵循协议的类型中都重复同样的实现，也无需使用全局函数。
 
@@ -329,6 +348,14 @@ print(circulars.textualDescription)
 
 这里扩展了 `Collection` 协议，但是限制只适用于集合中的元素遵循了 `TextRepresentable` 协议的情况。 因为 `Swift` 中 `Array` 符合 `Collection` 协议，而 `Circular` 类型又符合 `TextRepresentable` 协议，所以 `circulars` 可以使用 `textualDescription` 属性得到数组内容的文本表示
 
+## 关于《Swift vs. Kotlin 漫谈》系列
 
+- 《Swift vs. Kotlin 漫谈》系列之变量定义
+- 《Swift vs. Kotlin 漫谈》系列之函数定义
+- 《Swift vs. Kotlin 漫谈》系列之控制流
+- 《Swift vs. Kotlin 漫谈》系列之基本类型
 
+《Swift vs. Kotlin 漫谈》系列是由 KotlinThree 发起的，旨在把 Swift 和 Kotlin 进行一个全面的对比，帮助 iOS 和 Android 开发对彼此的语言之间有一个更加深入的认识。如果你有兴趣可以关注我们公众号，也可以通过「原文链接」查看详情。
 
+---
+![](http://7xpox6.com1.z0.glb.clouddn.com/kotlin-three-wechat.jpg)
