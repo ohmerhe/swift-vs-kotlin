@@ -61,7 +61,7 @@ let hexadecimalInteger = 0x11  //Int 17
 
 ***Kotlin:***
 
-这个kotlin也是一样的写法，除了声明常量用`var`而不是`let`，另外kotlin不支持8进制。
+这个kotlin也是一样的写法，除了声明常量用`val`而不是`let`，另外kotlin不支持8进制。
 
 有了整数就有浮点数，你们的浮点数是什么样的？
 
