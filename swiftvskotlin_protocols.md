@@ -7,7 +7,6 @@ Kotlin 君和 Swift 君在一个团队一起开发已经很久了，由于平台
 **Kotlin:**
 
 - static 和 class 有什么分别
-- required 是腰子子类必须复写方法？
 - 扩展与实现协议的差别
 - 协议合成，你们有typealias吗
 - 有哪些限制，只能被类实现的协议？
@@ -16,6 +15,85 @@ Kotlin 君和 Swift 君在一个团队一起开发已经很久了，由于平台
 
 ## Kotlin
 
+### 接口定义
+
+同 Java 一样，Kotlin 用 `interface` 关键字来定义接口，Kotlin 接口中可以有函数的实现，也可以只有抽象方法，接口无法保存状态，它可以有属性但必须声明为抽象或提供访问器实现。
+
+```kotlin
+interface MyInterface {
+    fun bar()
+    fun foo() {
+      // 可选的方法体
+    }
+}
+```
+
+### 实现接口
+
+Kotlin 的一个类或者对象可以实现一个或多个接口。由于 Kotlin 接口本身的函数式可以有实现的，所以在一个类或对象实现多个接口的时候，就有可能发生冲突，这包括接口之间的的成员冲突，也包括接口与父类直接的成员冲突。
+
+#### 覆盖冲突
+
+在 Kotlin 中，如果一个类从它的直接超类继承相同成员的多个实现（由于接口函数可以有实现），它必须覆盖这个成员并提供其自己的实现。 为了表示采用从哪个超类型继承的实现，我们使用由尖括号中超类型名限定的 super，如 super<Base>。
+
+```kotlin
+open class A {
+    open fun f() { print("A") }
+    fun a() { print("a") }
+}
+
+interface B {
+    fun f() { print("B") } // interface members are 'open' by default
+    fun b() { print("b") }
+}
+
+class C() : A(), B {
+    // The compiler requires f() to be overridden:
+    override fun f() {
+        super<A>.f() // call to A.f()
+        super<B>.f() // call to B.f()
+    }
+}
+```
+
+同时继承 A 和 B 没问题，并且 a() 和 b() 也没问题因为 C 只继承了每个函数的一个实现。 但是 f() 由 C 继承了两个实现，所以我们必须在 C 中覆盖 f() 并且提供我们自己的实现来消除歧义。
+
+### 接口中的属性
+
+Kotlin 中可以在接口中定义属性。在接口中声明的属性要么是抽象的，要么提供访问器的实现。在接口中声明的属性不能有幕后字段（backing field），因此接口中声明的访问器不能引用它们。
+
+```kotlin
+interface MyInterface {
+    val prop: Int // 抽象的
+
+    val propertyWithImplementation: String
+        get() = "foo"
+
+    fun foo() {
+        print(prop)
+    }
+}
+
+class Child : MyInterface {
+    override val prop: Int = 29
+}
+```
+
+### 函数默认参数与重载
+
+如果接口函数需要定义默认值的话，必须定义在接口中，在实现类或对象实现该方法时，不能为函数提供默认值。同时接口的中函数不能用 `JVMOverride` 注解修饰，所以接口中定义的带有默认值的参数，不能为 Java 生成重载方法，如果接口是定义在库里面，Kotlin 的实现也无法使用自动重载功能，需要手动重载。
+
+```
+interface IDownload{
+	fun(url: String, isSupportBreakpointC: Boolean = true)
+}
+
+class DownloadImpl{
+	override fun(url: String, isSupportBreakpointC: Boolean){
+		
+	}
+}
+```
 
 ## Swift
 
