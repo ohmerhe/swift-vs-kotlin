@@ -10,6 +10,8 @@ Hi, 小 S, Swift 4 发布了，有啥新变化吗？
 
 **Swift:**
 
+哈，小 K, 你也关注 WWDC 啊。
+
 总体来说 Swift 4 没有从 Swift 2 到 Swift 3 变化那么大，但也有很多强大的新特性值得我们去学习，我们的土豪铎已经总结好了 Swift 4 的所有新特性，可以直接点击链接去学习。[最全的 Swift 4 新特性解析](http://liuduo.me/2017/06/09/Whats_new_in_swift_4_completely/)
 
 **Kotlin:**
@@ -352,15 +354,15 @@ Swift 中协议能够继承一个或多个其他协议，可以在继承的协�
 
 **Kotlin:**
 
-当然可以。
+当然可以，这是基本的用法好伐。
 
 **Swift:**
 
-我们还可以通过让协议继承 `AnyObject` 协议来限制协议只能被 `Class` 类型遵循，而结构体或枚举不能遵循该协议。
+好吧。。我们还可以通过让协议继承 `AnyObject` 协议来限制协议只能被 `Class` 类型遵循，而结构体或枚举不能遵循该协议。
 
 **Kotlin:**
 
-我们的接口只能被类来实现。
+我们并没有这种限制，接口可以被类和枚举实现。
 
 **Swift:**
 
@@ -429,23 +431,13 @@ beginConcert(in: seattle)
 
 你们是怎么判断某个实例是否符合某个协议的？
 
-Swift 可以通过 `is` `as?` `as` 来检查某个实例是否符合某个协议：
-
-```
-let things: [Any] = [circular, square, "abc"]
-for thing in things {
-    if let object = thing as? TextRepresentable {
-        print(object.textualDescription)
-    } else {
-        print("It does not conform to TextRepresentable")
-    }
-}
-```
 **Kotlin:**
 
-是一样的，这就是判断某个对象是否是某个类型，不过 as 是用来类型强转的。
+这就是判断某个对象是否是某个类型嘛，当然是用 `is` 啦，如果是类型转换的话用 `as` 。
 
 **Swift:**
+
+嗯嗯，这点我们是一致的。
 
 你们可以定义接口中的方法或属性为可选吗？
 
@@ -463,7 +455,7 @@ for thing in things {
 
 **Swift:**
 
-嗯，Swift 是通过协议扩展来提供默认实现来到达可选的目的。
+嗯，Swift 是通过协议扩展提供默认实现来到达可选的目的。
 
 不过 Swift 也可以像 `Objective-C` 里那样定义可选的接口方法，就需要在 `protocol` 定义之前加上 `@objc`，将 `protocol` 变为 `Objective-C` 的。然后使用 `optional` 关键字来声明某些方法或属性在符合该协议的类中可以不实现，如下：
 
@@ -473,7 +465,7 @@ for thing in things {
     @objc optional var fixedIncrement: Int { get }
 }
 ```
-需要注意的是，标记为 `@objc` 的 `protocol` 只能被 `class` 实现，不能被 `struct` 和 `enum` 类型实现，而且实现它的 `class` 中的方法还必须也被标注为 `@objc`，或者整个类就是继承自 `NSObject`。
+需要注意的是，标记为 `@objc` 的 `protocol` 只能被 `class` 实现，不能被 `struct` 和 `enum` 类型实现，而且实现它的 `class` 中的方法也必须被标注为 `@objc`，或者整个类就是继承自 `NSObject`。
 
 **Kotlin:**
 
@@ -515,6 +507,8 @@ person.rentHouse()
 这是接口的一种常用方法，我们依赖注入框架就大量使用这种方式。
 
 **Swift:**
+
+哈哈，英雄所见略同。
 
 好了，就到这吧，今天的PK互有攻防，好带劲😎~
 
