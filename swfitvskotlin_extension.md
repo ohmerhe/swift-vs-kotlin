@@ -363,3 +363,121 @@ let representableArray = [Designer(),Designer(),Designer()]
 print(representableArray.allNames)
 
 ```
+
+
+
+拓展 Extensions ( Kotlin 篇 )
+==========================
+在Kotlin中，允许对类进行扩展，不需要继承或使用 Decorator 模式，通过一种特殊形式的声明，来实现某一具体功能。扩展函数是静态解析的，并未对原类增添函数或者属性，也就是说对其本身没有丝毫影响。
+
+## 扩展函数： 
+
+在kotlin里，通过扩展函数，我们可以很方便的为一个类添加一个方法。
+```kotlin
+fun String.lastChar(){
+    this.get(this.length - 1)
+}
+
+fun String.lastChar() = get(this.length - 1)
+```
+上面两种写法其实是一样的。其中，this关键字指代接收者对象(receiver object)(也就是调用扩展函数时, 在点号之前指定的对象实例)，有时可以省略。
+
+### 扩展函数的调用
+
+以上面的函数为例
+```kotlin
+ "Android".lastChar()
+```
+
+### 扩展函数的声明格式： 
+
+```kotlin
+fun receiverType.functionName(params){
+    body
+}
+```
+其中
+ - receiverType：表示函数的接收者，也就是函数扩展的对象
+ - functionName：扩展函数的名称
+ - params：扩展函数的参数，可以为NULL
+ - body 函数体
+
+### 扩展函数是静态解析的
+扩展方法是静态解析的，而并不是真正给类添加了这个方法。
+调用的扩展函数是由函数调用所在的表达式的类型来决定的，而不是由表达式运行时求值结果决定的。
+```kotlin
+open class Animal{
+
+}
+class Cat : Animal()
+
+object Main {
+    fun Animal.food() = "food"
+
+    fun Cat.food() = "fish"
+
+    fun Animal.printFood(anim: Animal){
+        println(anim.food())
+    }
+
+    @JvmStatic fun main(args: Array<String>) {
+        Animal().printFood(Cat())
+    }
+}
+```
+最终的输出是 food ，而不是 fish 。
+因为扩展方法是静态解析的，在添加扩展方法的时候类型为Animal，那么即便运行时传入了子类对象，也依旧会执行参数中声明时类型的方法。
+
+### 成员函数和扩展函数
+如果一个类定义有一个成员函数和一个扩展函数，而这两个函数又有相同的接收者类型、相同的名字并且都适用给定的参数，这种情况总是优先调用成员函数。
+```kotlin
+class Dog : Animal(){
+    fun printFood(){
+          println("meat")
+    }
+}
+
+object Main {
+    fun Dog.printFood(){
+        println("bone")
+    }
+
+    @JvmStatic fun main(args: Array<String>) {
+        val dog: Dog = Dog()
+        dog.printFood()
+    }
+}
+```
+这里输出 meat。
+
+## 扩展属性
+
+```kotlin
+val TextView.leftMargin:Int
+get():Int {
+     return (layoutParams as ViewGroup.MarginLayoutParams).leftMargin
+    }
+set(value) {
+        (layoutParams as ViewGroup.MarginLayoutParams).leftMargin=value
+    }
+```
+由于扩展没有实际的将成员插入类中，因此对扩展属性来说幕后字段是无效的。所以,对于扩展属性不允许存在初始化器。 扩展属性的行为只能由显式提供的 getters/setters 定义。也就意味着扩展属性只能被声明为val而不能被声明为var.如果强制声明为var，即使进行了初始化，在运行也会报异常错误，提示该属性没有幕后字段。 
+
+## 伴生对象的扩展
+如果一个类定义有一个伴生对象 ，你也可以为伴生对象定义扩展函数和属性：
+```kotlin
+fun Animal.Companion.eat() {
+    println("eat")
+}
+
+val Animal.Companion.food: String
+get() = "food"
+
+@JvmStatic fun main(args: Array<String>) {
+
+    println("food:${Animal.food}")
+    Animal.eat()
+}
+```
+对于伴生对象的扩展属性和方法，只需用类名作为限定符去调用他们就可以了。
+
