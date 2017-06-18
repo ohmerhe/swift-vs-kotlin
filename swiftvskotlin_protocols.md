@@ -96,7 +96,7 @@ extension MyClass: SomeProtocol {
 
 **Kotlin:**
 
-/// Kotlin该怎么回答呢？
+Kotlin 没有结构体的概念， `enum` 也可以实现接口。
 
 来说说你们的接口中可以声明哪些东西吧？
 
@@ -108,7 +108,7 @@ extension MyClass: SomeProtocol {
 
 **Kotlin:**
 
-我们也可以声明属性和方法，属性的声明我们不需要加 `get` 和 `set` 标识，我们比较牛的是，可以直接在接口中为属性和方法提供默认实现：
+我们也可以声明属性和方法，而且 Kotlin 可以直接在接口中为属性和方法提供默认实现：
 
 ```kotlin
 interface MyInterface {
@@ -352,7 +352,7 @@ Swift 中协议能够继承一个或多个其他协议，可以在继承的协�
 
 **Kotlin:**
 
-/// 能不能继承呢？
+当然可以。
 
 **Swift:**
 
@@ -390,7 +390,7 @@ wishHappyBirthday(to: birthdayPerson)
 
 **Kotlin:**
 
-/// 能组合吗？
+666，你们的协议真是玩出花了，这个功能我们也没有😢。
 
 **Swift:** 
 
@@ -423,7 +423,7 @@ beginConcert(in: seattle)
 
 **Kotlin:**
 
-太赞了~，给你点32个赞！
+太赞了~，给你点32个赞👍！
 
 **Swift:**
 
@@ -443,7 +443,7 @@ for thing in things {
 ```
 **Kotlin:**
 
-/// 怎么判断？
+是一样的，这就是判断某个对象是否是某个类型，不过 as 是用来类型强转的。
 
 **Swift:**
 
@@ -463,7 +463,7 @@ for thing in things {
 
 **Swift:**
 
-嗯，Swift 也是通过协议扩展来提供默认实现来到达可选的目的。
+嗯，Swift 是通过协议扩展来提供默认实现来到达可选的目的。
 
 不过 Swift 也可以像 `Objective-C` 里那样定义可选的接口方法，就需要在 `protocol` 定义之前加上 `@objc`，将 `protocol` 变为 `Objective-C` 的。然后使用 `optional` 关键字来声明某些方法或属性在符合该协议的类中可以不实现，如下：
 
@@ -512,7 +512,7 @@ person.rentHouse()
 ```
 **Kotlin:**
 
-/// Kotlin有这种用法吗？
+这是接口常的一种常用方法，我们依赖注入框架就大量使用这种方式。
 
 **Swift:**
 
