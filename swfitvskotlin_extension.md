@@ -710,12 +710,8 @@ extension Human {
 
     class Child: Human {
         var sex:Sex = kotliner.childSex
-        weak var father: Human? {
-            return kotliner;
-        }
-        weak var mother: Human? {
-            return kotliner.lover
-        }
+        weak var father: Human? = kotliner
+        weak var mother: Human? = kotliner.lover
     }
     var daughter: Child {
         return Child.init("littleAngel", age: 0)
@@ -728,15 +724,24 @@ let childFatherName = yourChild.father?.name // Kotliner
 
 ***Kotlin***
 
-哇！！！当程序员居然有这个福利。我喜欢生女儿，生女儿好；
+哇！！！当程序员居然有这个福利。我喜欢生女儿，生女儿好；可是为什么我女儿的父亲母亲要用`weak`
 
 ***Swift***
 
-万事俱备只欠东风，你这还没有结婚就有孩子了，明儿求婚还不是百分百搞定；
+你傻啊，你女儿终有一天会嫁出去的，不用`weak`的话就和你循环引用释放不了，你还想留你女儿一辈子？但是Human的lover我没有加weak，就是故意让你们相互引用，相守一身不离不弃；
 
 ***Kotlin***
 
-Swift君，多谢兄弟帮忙；婚礼的事情也请你能够多多指教，我没有经验；
+我。。。（感动ing）
+
+***Swift***
+
+好了好了，你先关注当下
+婚礼的事情只欠东风，你这还没有结婚就有孩子了，明儿求婚还不是百分百搞定；
+
+***Kotlin***
+
+Swift君，多谢兄弟帮忙；婚礼的事情也希望请你多多指教，我没有经验；
 
 ***Swift***
 
