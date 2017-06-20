@@ -772,7 +772,7 @@ let kotlinerPromise = kotliner.promise
 let angelPromise = angel.promise
 let angelAuthentic = kotliner.approveByGovernment // true
 let kotlinerAuthentic = angel.approveByGovernment // true
-```Ω
+```
 
 好了，你们的婚姻都有政府见证，都有对方的誓言。恭喜你kotlin君🎉，你脱单了
 
