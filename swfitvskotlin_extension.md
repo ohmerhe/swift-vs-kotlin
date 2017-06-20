@@ -551,7 +551,7 @@ extension Human {
         return lover == nil
     }
 }
-let angelIsSingle = girl.isSingle // true
+let angelIsSingle = angel.isSingle // true
 ```
 你看, 恭喜👏恭喜🎉，女神还单身，你有机会是吧！
 
@@ -572,26 +572,26 @@ let angelIsSingle = girl.isSingle // true
 
 ```swift
 extension Human {
-    func fallInLoveBy撩妹秘籍(_ lover: Human) {
+    func fallInLoveBy撩X秘籍(_ lover: Human) {
         self.lover = lover;
     }
 }
 
-girl.fallInLoveBy撩妹秘籍(kotliner)
-isSingle = girl.isSingle // false
-let angelsLover = girl.lover?.name // Kotliner
+angel.fallInLoveBy撩X秘籍(kotliner)
+let isSingle = angel.isSingle // false
+let angelsLover = angel.lover?.name // Kotliner
 ```
 看，你的女神不是单身了，而且爱上你了；
 
-如果你魅力足，你都可以让全世界不论男女都爱上你
+当然在Swift里甚至可以让全世界不论男女都爱上你
 
 ```swift
 extension Human {
-    class func loversName() -> String {
+    class func perfectLoversName() -> String {
         return "Kotliner"
     }
 }
-var name = Human.loversName() // Kotliner
+var name = Human.perfectLoversName() // Kotliner
 ```
 
 
@@ -612,21 +612,23 @@ var name = Human.loversName() // Kotliner
 
 ***Swift***
 
-不错不错，可以借鉴；以前我父母他们那一辈有媒妁之约，男孩女孩一出生就婚定一生，要是你也是在那个时代就简单了;（构造器）
+不错不错，可以借鉴；以前我父母他们那一辈有媒妁之约，男孩女孩一出生就婚定一生，前面一大堆的拓展学习太麻烦都可以省去，我直接在你女神出生那一刻就给你定娃娃亲，这事就简单了;（构造器）
 
 `当你的女神还是一个baby的时候，订个娃娃亲就好简单了`
 
 ```swift
 extension Human {
+    // 刚刚出生 age=0
     init(birthWithName name: String, lover: Human?) {
         self.name = name
         self.lover = lover
         self.age = 0
     }
 }
-// Angelababy
+// Angelababy（感情你女神是杨颖啊）
 var angelBaby = Human.init(birthWithName: "Angel", lover: kotliner)
 ```
+哈哈哈，一下子就成了。
 
 ***Kotlin***
 
@@ -638,50 +640,107 @@ xxxxxxxxxx
 
 ```
 
+我去，原来这些我都这么快就学会了。女神我已经追求到手了，我们打算明天求婚。
+
 ***Swift***
 
-我都快想象到未来你们女儿的样子了！
+等等等一下。。好不容易追到你女神，要好好爱护她，不过还好你是程序员，物质基础比较牢靠，但要有一份稳定的工作先保证；
 
 ***Kotlin***
 
-啥？
+是是是，我这边公司加班太多了，以后都没法陪老婆孩子，想换一家工作时间分配比较合理一点的公司，你给我推荐一下吧；
 
 ***Swift***
 
-Kotlin君,你是程序员啊，程序员不是生女儿嘛，不信你看啊（拓展嵌套类型）
+好，这份我们公司的程序员工作合同，签了它就可以过来上班了
+
+```swift
+protocol DeveloperJobProtocol {
+    var job:String { get }
+    var salary: Int { get }
+    var level: Int { get }
+    var childSex: Sex { get }
+}
+```
+
+签合同很简单，看我给你演示一下
 
 ```swift
 
-extension Human {
-    enum Sex {
-        case male, female
+enum Sex {
+    case male, female
+}
+
+extension Human: DeveloperJobProtocol {
+    var job:String {
+        return "Andriod"
     }
-    class Child: Human {
-        var sex:Sex = .female
+    var salary: Int {
+        return level*2000 + 6000
     }
-    var daughter: Child {
-        return Child.init("Kotliner", age: 26)
+    var level: Int {
+        return 6
+    }
+    var childSex: Sex {
+        return .female
     }
 }
 
-let yourChildSex = kotliner.daughter.sex // female
+kotliner.salary // 18k
+```
+
+这是我们公司根据你的情况给你做的合同
+
+***Kotlin***
+
+18k，很好。知足了
+
+```kotlin
+  //code
+```
+
+childSex 是什么鬼？
+
+***Swift***
+
+你做了程序员，那你不就注定生女儿了嘛。我都想象到未来你们生女儿一起生活的画面了！（拓展嵌套类型）
+
+```swift
+extension Human {
+
+    class Child: Human {
+        var sex:Sex = kotliner.childSex
+        weak var father: Human? {
+            return kotliner;
+        }
+        weak var mother: Human? {
+            return kotliner.lover
+        }
+    }
+    var daughter: Child {
+        return Child.init("littleAngel", age: 0)
+    }
+}
+
+let yourChild = kotliner.daughter
+let childFatherName = yourChild.father?.name // Kotliner
 ```
 
 ***Kotlin***
 
-生女儿👩‍👧好啊。
+哇！！！当程序员居然有这个福利。我喜欢生女儿，生女儿好；
 
 ***Swift***
 
-那眼看你学了一点撩妹秘籍，但Kotlin君，你们步入婚姻殿堂还需要最后一步
+万事俱备只欠东风，你这还没有结婚就有孩子了，明儿求婚还不是百分百搞定；
 
 ***Kotlin***
 
-婚礼？
+Swift君，多谢兄弟帮忙；婚礼的事情也请你能够多多指教，我没有经验；
 
 ***Swift***
 
-差不多，就是需要一本结婚证，相互遵守婚姻协议后这事就成了
+其实都差不多了，就差一本结婚证，你们能够遵守婚姻协议后这事就成了
 
 ```swift
 // 婚姻协议
@@ -690,6 +749,7 @@ protocol MarriageProtocol {
     var approveByGovernment: Bool {get}
 }
 
+// 这协议的内容我已经限制人类身上了，动物结婚不需要政府允许的
 extension MarriageProtocol where Self: Human {
     // 誓言承诺
     var promise: String {
@@ -700,10 +760,26 @@ extension MarriageProtocol where Self: Human {
         return true
     }
 }
+```
 
+剩下的你们遵守婚姻协议就好了
+
+```swift
 // 人类遵守了婚姻协议：1.履行承诺；2.政府认可
 extension Human: MarriageProtocol {}
 
-let promise = kotliner.promise
-let authentic = kotliner.approveByGovernment // true
-```
+let kotlinerPromise = kotliner.promise
+let angelPromise = angel.promise
+let angelAuthentic = kotliner.approveByGovernment // true
+let kotlinerAuthentic = angel.approveByGovernment // true
+```Ω
+
+好了，你们的婚姻都有政府见证，都有对方的誓言。恭喜你kotlin君🎉，你脱单了
+
+***Kotlin***
+
+Swift君 😭，我说不出话了。好兄弟无言表达我的谢意；
+
+***Swift***
+
+这没什么，我只是分享指导了我的撩妹技巧而已；
