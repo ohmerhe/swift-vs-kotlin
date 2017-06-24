@@ -560,9 +560,21 @@ let angelIsSingle = angel.isSingle // true
 这TMD也可以啊，看我也现学现卖一下；
 
 ```kotlin
+class Human(name:String){
+    var lover: Human?
+    constructor(name:String ,age: Int) : this(name){
+    
+    }
+}
 
-//code
+val kotliner = Human("Kotliner", age: 26)
+val angel = Human("Angel", age: 27)
 
+fun Human.isSingle Boolean {
+    return this.lover == null
+}
+
+val angelIsSingle = angel.isSingle // true
 ```
 
 ***Swift***
@@ -600,14 +612,19 @@ var name = Human.perfectLoversName() // Kotliner
 这个好，我也试试看看
 
 ```kotlin
+fun Human.fallInLoveBy撩X秘籍(lover: Human){
+    this.lover = lover
+}
 
-// code
+angel.fallInLoveBy撩X秘籍(kotliner)
 
+val isSingle = angel.isSingle // false
+val angelsLover = angel.lover?.name // Kotliner
 ```
 我还悟出了其他的撩妹技巧，你也看看你以前用过没有；
 
 ```kotlin
-// code
+
 ```
 
 ***Swift***
@@ -632,12 +649,16 @@ var angelBaby = Human.init(birthWithName: "Angel", lover: kotliner)
 
 ***Kotlin***
 
-xxxxxxxxxx
+这个好，我自己来！
 
 ```kotlin
-
-// code
-
+class Human(name:String){
+    ...
+    constructor(name:String ,lover: Human,age: Int = 0) : this(name){
+    
+    }
+}
+var angelBaby = Human(name = "Angel", lover = kotliner)
 ```
 
 我去，原来这些我都这么快就学会了。女神我已经追求到手了，我们打算明天求婚。
@@ -696,7 +717,28 @@ kotliner.salary // 18k
 18k，很好。知足了
 
 ```kotlin
-  //code
+enum class Sex {
+    male,female
+}
+
+val Human.job: String
+get():String {
+     return "Andriod"
+    }
+var Human.salary: Int
+get():Int {
+     return level*2000 + 6000
+    }
+var Human.level: Int
+get():Int {
+     return 6
+    } 
+var Human.childSex: Sex
+get():Int {
+     return Sex.female
+    }
+
+kotliner.salary // 18k
 ```
 
 childSex 是什么鬼？
