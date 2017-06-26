@@ -366,7 +366,7 @@ print(representableArray.allNames)
 
 
 
-拓展 Extensions ( Kotlin 篇 )
+扩展 Extensions ( Kotlin 篇 )
 ==========================
 在Kotlin中，允许对类进行扩展，不需要继承或使用 Decorator 模式，通过一种特殊形式的声明，来实现某一具体功能。扩展函数是静态解析的，并未对原类增添函数或者属性，也就是说对其本身没有丝毫影响。
 
@@ -557,7 +557,7 @@ let angelIsSingle = angel.isSingle // true
 
 ***Kotlin***
 
-这TMD也可以啊，看我也现学现卖一下；
+这TMD也可以啊，看我也现学现卖一下。是否单身的属性我们也可以加，就是写法不太一样；
 
 ```kotlin
 class Human(name:String){
@@ -609,7 +609,7 @@ var name = Human.perfectLoversName() // Kotliner
 
 ***Kotlin***
 
-这个好，我也试试看看
+这个好，我也试试看看，感觉我们的写法要更简洁点哦：
 
 ```kotlin
 fun Human.fallInLoveBy撩X秘籍(lover: Human){
@@ -624,7 +624,11 @@ val angelsLover = angel.lover?.name // Kotliner
 我还悟出了其他的撩妹技巧，你也看看你以前用过没有；
 
 ```kotlin
+fun Human.壁咚(lover: Human){
+    this.lover = lover
+}
 
+kotliner.壁咚(angel)  //卒......
 ```
 
 ***Swift***
@@ -649,7 +653,7 @@ var angelBaby = Human.init(birthWithName: "Angel", lover: kotliner)
 
 ***Kotlin***
 
-这个好，我自己来！
+这个好，不过我们构造器貌似是没法做扩展的,倒是可以继承之前的构造器:
 
 ```kotlin
 class Human(name:String){
