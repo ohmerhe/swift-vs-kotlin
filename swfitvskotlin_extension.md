@@ -859,3 +859,22 @@ get() = "food"
 }
 ```
 对于伴生对象的扩展属性和方法，只需用类名作为限定符去调用他们就可以了。
+
+## 扩展的作用域
+
+我们在a包中定义的扩展方法
+```kotlin
+package a
+
+fun Cat.food() { …… } 
+```
+要在a包之外使用这个扩展，我们需要在调用方导入它：
+```kotlin
+package b
+import a.food // 导入所有名为“food”的扩展
+                   // 或者
+import a.*   // 从“a包”导入一切
+
+fun usage(cat: Cat) {
+    cat.food()
+```
