@@ -412,10 +412,11 @@ extension SomeType: SomeProtocol, AnotherProctocol {
 --------
 扩展可以为已有类型添加计算型实例属性和计算型类型属性
 
-下面为 Swift 的内建 Double 类型添加了五个计算型实例属性
 
 ```swift
-// 基础类型
+
+// 基础类型计算型属性扩展
+// 为Swift Double 类型添加了五个计算型实例属性
 extension Double {
     var km: Double { return self / 1000.0 }
     var m : Double { return self }
@@ -425,16 +426,13 @@ extension Double {
 let distance = Double(7353)
 distance.km
 
-// 结构体（class 类似）
+// 结构体计算型属性扩展：与类（引用类型）类似
 struct iOSer {
     var name: String
 }
 extension iOSer {
     var isValid: Bool {
         return !name.isEmpty
-    }
-    mutating func work() {
-        name = name + "_coding_dog"
     }
 }
 
@@ -455,9 +453,10 @@ extension AppleDevice {
 
 支持构造器
 ---------
-扩展可以为已有类型添加新的构造器。这可以让你扩展其它类型，将你自己的定制类型作为其构造器参数，或者提供该类型的原始实现中未提供的额外初始化选项。
+扩展可以为已有类型添加新的构造器。
+这可以让你扩展其它类型，将你自己的定制类型作为其构造器参数，或者提供该类型的原始实现中未提供的额外初始化选项。
 
-扩展能为类添加新的便利构造器，但是它们不能为类添加新的指定构造器或析构器。指定构造器和析构器必须总是由原始的类实现来提供。
+> Note: 扩展能为类添加新的便利构造器，但是它们不能为类添加新的指定构造器或析构器。指定构造器和析构器必须总是由原始的类实现来提供。
 
 ```swift
 // 参考已有的如上代码：iOSer、Human
@@ -480,7 +479,8 @@ extension Human {
 方法
 -----
 扩展可以为已有类型添加新的实例方法和类型方法、静态方法
-结构体的静态方法相当于引用类型的类型方法
+
+> Note: 结构体的静态方法相当于引用类型的类型方法，类的静态方法和类方法相似，但是static修饰类时是不会被override（重写的），但class可以
 
 ```swift
 extension iOSer {
@@ -591,11 +591,11 @@ extension Int {
 ```
 
 扩展 && 协议
-------
+----------
 详细可以参考漫谈的协议部分，其中包含面向协议编程
 
 通过扩展遵循协议
-------
+-------------
 
 ```swift
 
@@ -639,7 +639,7 @@ print(unnamed.prettyTextualDescription)
 
 
 通过扩展遵循协议实现协议的默认实现
-------
+----------------------------
 
 ```swift
 
