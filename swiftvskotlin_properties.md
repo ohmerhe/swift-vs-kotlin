@@ -13,7 +13,7 @@ Kotlin 君和 Swift 君在一个团队一起开发已经很久了，由于平台
 **Kotlin:**
 **Swift:**
 **Kotlin:**
-**Swift:**
+**Swift:**--
 **Kotlin:**
 **Swift:**
 **Kotlin:**
@@ -253,3 +253,192 @@ class User(val map: Map<String, Any?>) {
 
 
 ## Swift
+
+属性可以定义在类、结构体、枚举这三种类型中，用 let 声明只读属性，用 var 声明可变属性，定义属性的基本语法为：
+
+```swift
+let|var <propertyName>: [<propertyType>] [= <initialValue>]
+```
+
+根据属性本身是否保存值可以分为储值属性和计算属性。
+
+### 储值属性
+
+定义属性时不加 get 和 set 的属性就是储值属性，储值属性本身保存一个值。这个值可以被修改（var），叫可变储值属性；也可以不允许被修改（let），叫不可变储值属性。
+
+例如在结构体 `FixedLengthRange` 中定义两个储值属性：
+
+```swift
+struct FixedLengthRange {
+    var firstValue: Int
+    let length: Int
+}
+```
+
+可以在创建这个结构体的实例时给它的属性赋初始值
+
+```swift
+var rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+```
+
+由于 firstValue 这个属性是用 var 定义的可变属性，可以在实例创建后修改这个属性的值：
+
+```swift
+rangeOfFourItems.firstValue = 6
+```
+
+而 length 这个属性是用 let 定义的只读属性，它的值不能再被修改。
+
+#### 常量结构体的储值属性
+
+还是上面那个例子，不同的是，如果把实例定义为常量，这时它的所有属性都不能被修改。
+
+```swift
+var rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+rangeOfFourItems.firstValue = 6 // 编译报错
+```
+
+对于是引用类型的类来说，常量类实例的属性还是可以被修改的。
+
+#### 延迟加载的储值属性
+
+延迟加载的储值属性直到这个属性被第一次使用的时候才会被初始化，用 lazy 关键字来指定一个储值属性是延迟加载的。代码如下：
+
+```
+class DataManager {
+    lazy var importer = DataImporter()
+}
+```
+
+注意 lazy 修饰的属性只能用 var 来定义，不能用 let。因为 Swift 的类型的实例在初始化结束后必须保证每个属性都有初始值，而延迟加载的属性再没用到的时候不会执行它的初始化代码来赋值，而是系统会给它一个隐式的初始化值，当属性被使用时，再去执行它的初始化代码给属性设置值，这时相当于改变了属性的值，所以延迟加载只能用在可变属性上。
+
+如果一个类型的属性在程序运行过程中可能从来不会被用到，那么把它定义成延迟加载的是一个不错的选择，可以有效的节省系统资源，提高程序运行效率。
+
+#### 储值属性和实例变量
+
+如果你有较多的 Objective-C 开发经验，那么一定知道在 Objective-C 中，每个属性的背后是一个私有的实例变量在保存属性的值，属性在这个私有实例变量基础上增加了一些额外的 Setter, Getter 操作，提供访问限制，KVO 的支持等。Swift 的属性已经把这两者合为一体，这避免了在不同上下文访问属性值时产生歧义，也简化了属性声明过程。
+
+### 计算属性
+
+在类、结构体和枚举中也可以定义计算属性，计算属性本身并不保存值，它的值通过提供一个 Getter 计算出来，并且可以选择性提供一个 Setter 来进行赋值计算。
+
+#### Setter 和 Getter
+
+```swift
+struct Rect {
+    var origin = CGPoint()
+
+    var center: CGPoint {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return CGPoint(x: centerX, y: centerY) 
+        }
+        set(newCenter) {
+            origin.x = newCenter.x - (size.width / 2)
+            origin.y = newCenter.y - (size.height / 2)
+        }
+    }
+}
+```
+
+看上面代码，结构体 Rect 中有一个计算属性 center，在这个计算属性定义的后面跟了一堆大括号，里面写了一个 get 和 set。对于计算属性来说，get 是必须的，属性值就是通过 get 中的代码计算得出，get 代码块中的 return 的值就是 center 属性得到的值。
+
+一样也可以提供一个 set 代码块，其中的代码会在的大歌会在给 center 属性赋值时执行，这里在给另一个属性 origin 对象的属性进行赋值。set 关键字后面可以跟一个括号，里面写的是代表给这个属性赋的新值的变量名称，可以随便起，也可以省去这个括号，那么代表新值得变量名默认为 newValue。
+
+因为计算属性的值不是固定的，因此只能用 var 修饰计算属性，不能用 let。
+
+#### 只读计算属性
+
+计算属性可以仅提供 get 代码块，不提供 set 代码块，就像这样：
+
+```swift
+var center: CGPoint {
+    get {
+        let centerX = origin.x + (size.width / 2)
+        let centerY = origin.y + (size.height / 2)
+        return CGPoint(x: centerX, y: centerY) 
+    }
+}
+```
+
+这是这个 center 为只读计算属性，在这种情况下，可以省去 get 和一对大括号，简写为：
+
+```swift
+var center: CGPoint {
+    let centerX = origin.x + (size.width / 2)
+    let centerY = origin.y + (size.height / 2)
+    return CGPoint(x: centerX, y: centerY) 
+}
+```
+
+### 属性观察
+
+有时候我们想要在属性的值发生变化的之前和之后做一些事情，在 Swift 中，可以很方便的使用属性观察来实现。
+
+在属性定义的时候，Swift 提供了两个关键字：willSet 和 didSet 来引出属性值发生发生变化前，和属性值发生变化后执行的代码块，例如：
+
+```swift
+class StepCounter {
+    var totalSteps: Int = 0 {
+        willSet(newTotalSteps) {
+            print("About to set totalSteps to \(newTotalSteps)")
+        }
+        didSet {
+            if totalSteps > oldValue  {
+                print("Added \(totalSteps - oldValue) steps")
+            }
+        }
+    }
+}
+```
+
+看上面代码，StepCounter 类有个 totalSteps 储值属性，在属性定义之后的一对大括号中，写了 willSet 和 didSet 这两个代码块。
+
+当 totalSteps 的值发生变化时，例如：
+
+```swift
+let stepCounter = StepCounter()
+stepCounter.totalSteps = 200
+```
+
+在 stepCounter 的值被实际修改为 200 前，会执行 willSet 中的代码，willSet 后可以跟一个小括号，里面是代表即将付给属性的新值的变量，如果不写小括号，则默认为 newValue。
+
+在 stepCounter 的值被实际修改为 200 之后，会执行 didSet 中的代码，didSet 代码块中，Swift 提供了一个变量 oldValue 代表被修改前的旧值。
+
+### 类型属性
+
+上面所讲的都是实例属性，Swift 中也可以定义类型属性，类型属性属于类型本身，而不属于类型的实例。在属性定义的时候，用 static 修饰的就是类型属性。
+
+```swift
+struct SomeStructure {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 1
+    }
+}
+```
+
+上面的 storedTypeProperty 和 computedTypeProperty 就是 SomeStructure 这个类型本身的属性，可以通过：
+
+```swift
+SomeStructure.storedTypeProperty
+SomeStructure.computedTypeProperty
+```
+
+来调用。
+
+对于类，也可以用 class 来修饰，class 允许这个属性被子类复写，这是 class 唯一与 static 不同的地方，static 定义的属性不能被子类复写，例如：
+
+```swift
+class SomeClass {
+    class var overrideableComputedTypeProperty: Int {
+        return 107
+    }
+}
+```
+
+
+
+
+
