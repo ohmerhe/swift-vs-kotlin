@@ -5,16 +5,78 @@ Kotlin 君和 Swift 君在一个团队一起开发已经很久了，由于平台
 # 技术漫谈
 
 **Kotlin:**
+
+Swift 君，多日不见，甚是想念。
+
 **Swift:**
+
+想念想念，咱们今天来说说什么呢？
+
 **Kotlin:**
+
+今天来说说属性。
+
 **Swift:**
+
+好的，你先来。
+
 **Kotlin:**
+
+属性在 Kotlin 中就是定义在类中的变量。
+
 **Swift:**
+
+在 Swift 中，属性可以定义在类、枚举和结构体中。
+
 **Kotlin:**
+
+Kotlin 在类中用 val 定义只读属性，用 var 定义可变属性，类的对象可以通过名称访问类的属性。
+
 **Swift:**
+
+这个 Swift 也比较类似，Swift 中用 let 定义只读属性，用 var 定义可变属性。
+
 **Kotlin:**
-**Swift:**--
+
+Kotlin 定义属性的完整语法为：
+
+```
+var <propertyName>[: <PropertyType>] [= <property_initializer>]
+    [<getter>]
+    [<setter>]
+```
+
+其中 initializer、getter 和 setter 是并不是必须的。在属性类型可以通过 initializer 推断的情况下，属性类型也可以不声明。
+
+举几个例子：
+
+```
+val a: Int = 1  // 直接声明
+val b = 2   // `Int` 类型是推断出来的
+val c: Int  // 在没有初始化赋值的化，需要定义类型
+```
+
+**Swift:**
+
+Swift 定义属性的语法大概为：
+
+```
+let|var <propertyName>: [<propertyType>] [= <initialValue>]
+```
+
+同 Kotlin 很像，例如：
+
+```
+let a: Int = 1
+let b = 2
+var c: Int
+```
+
 **Kotlin:**
+
+Kotlin 的属性可以自定义 Getter 和 Setter，具体方式如下：
+
+
 **Swift:**
 **Kotlin:**
 **Swift:**
@@ -33,7 +95,7 @@ Kotlin 君和 Swift 君在一个团队一起开发已经很久了，由于平台
 
 ## Kotlin
 
-Kotlin 在类里面用 val 定义只读属性，用 var 定义可变属性。类的对象可以用过名称访问类的属性。
+Kotlin 在类里面用 val 定义只读属性，用 var 定义可变属性。类的对象可以通过名称访问类的属性。
 
 Kotlin 定义变量的完整语法
 
