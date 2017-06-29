@@ -380,7 +380,8 @@ TMD,为啥我Swift君指导别人都能成功，自己单身狗当着都是偷�
 
 拓展 Extensions 知识点 🎓( Swift 篇 )
 ==========================
-Swuft 扩展 就是为一个已有的类、结构体、枚举类型或者协议类型添加新功能。和OC的category类似
+扩展 就是为一个已有的类、结构体、枚举类型或者协议类型添加新功能。这包括在没有权限获取原始源代码的情况下扩展类型的能力。扩展和 Objective-C 中的分类类似。
+
 - 拓展语法
 - 计算属性
 - 构造器
@@ -389,45 +390,29 @@ Swuft 扩展 就是为一个已有的类、结构体、枚举类型或者协议�
 - 嵌套类型
 - 协议
 
-拓展语法： 举几个常见的 🌰
----------------
-
+拓展语法
+--------
+使用关键字 `extension` 来声明扩展：
 
 ```swift
-class Human: NSObject {
-
-    var name = "my_vc"
-
-    init(name: String) {
-        self.name
-    }
-    func work() {
-        print("工作中")
-    }
-}
-
-extension Human {
-    func drivingTest() {
-        print("通过驾照考试")
-    }
-}
-
-extension Human: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3;
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(name)
-    }
+extension SomeType {
+    // 为 SomeType 添加的新功能
 }
 ```
 
+可以通过扩展来扩展一个已有类型，使其采纳一个或多个协议。在这种情况下，无论是类还是结构体，协议名字的书写方式完全一样：
+
+```swift
+extension SomeType: SomeProtocol, AnotherProctocol {
+    // 协议实现写到这里
+}
+```
 
 计算型属性
 --------
+扩展可以为已有类型添加计算型实例属性和计算型类型属性
+
+下面为 Swift 的内建 Double 类型添加了五个计算型实例属性
 
 ```swift
 // 基础类型
@@ -470,18 +455,22 @@ extension AppleDevice {
 
 支持构造器
 ---------
-值类型可以直接构造，引用类型需要使用便利构造器
+扩展可以为已有类型添加新的构造器。这可以让你扩展其它类型，将你自己的定制类型作为其构造器参数，或者提供该类型的原始实现中未提供的额外初始化选项。
+
+扩展能为类添加新的便利构造器，但是它们不能为类添加新的指定构造器或析构器。指定构造器和析构器必须总是由原始的类实现来提供。
 
 ```swift
 // 参考已有的如上代码：iOSer、Human
 
 extension iOSer {
+    // 结构体
     init(firstName: String, secondName: String) {
         self.name = firstName + secondName
     }
 }
 
 extension Human {
+    // 类
     convenience init(firstName: String, secondName: String) {
         self.init(name: firstName + secondName)
     }
@@ -490,7 +479,8 @@ extension Human {
 
 方法
 -----
-静态方法，实例方法，类方法
+扩展可以为已有类型添加新的实例方法和类型方法、静态方法
+结构体的静态方法相当于引用类型的类型方法
 
 ```swift
 extension iOSer {
@@ -529,6 +519,8 @@ me.coding {
 
 嵌套类型
 ------
+扩展可以为已有的类、结构体和枚举添加新的嵌套类型：
+
 比如结构体里面的枚举等等
 
 ```swift
@@ -571,7 +563,10 @@ xcodeyang.newJob.salary
 
 下标
 ----
+扩展可以为已有类型添加新下标。
 常见数组，字典等等
+
+这个例子为 Swift 内建类型 Int 添加了一个整型下标。该下标 [n] 返回十进制数字从右向左数的第 n 个数字：
 
 ```swift
 
@@ -584,14 +579,20 @@ extension Int {
         return (self / decimalBase) % 10
     }
 }
-746381295[0] // 7
-746381295[5] // 1
+746381295[0] // 5
+746381295[5] // 3
 ```
+如果该 Int 值没有足够的位数，即下标越界，那么上述下标实现会返回 0，犹如在数字左边自动补 0：
 
+```swift
+746381295[9]
+// 返回 0，即等同于：
+0746381295[9]
+```
 
 扩展 && 协议
 ------
-`详细可以参考后面协议的部分`
+详细可以参考漫谈的协议部分，其中包含面向协议编程
 
 通过扩展遵循协议
 ------
@@ -634,8 +635,6 @@ print(john.prettyTextualDescription)
 print(unnamed.prettyTextualDescription)
 
 ```
-
-
 
 
 
@@ -859,3 +858,22 @@ get() = "food"
 }
 ```
 对于伴生对象的扩展属性和方法，只需用类名作为限定符去调用他们就可以了。
+
+## 扩展的作用域
+
+我们在a包中定义的扩展方法
+```kotlin
+package a
+
+fun Cat.food() { …… }
+```
+要在a包之外使用这个扩展，我们需要在调用方导入它：
+```kotlin
+package b
+import a.food // 导入所有名为“food”的扩展
+                   // 或者
+import a.*   // 从“a包”导入一切
+
+fun usage(cat: Cat) {
+    cat.food()
+```
