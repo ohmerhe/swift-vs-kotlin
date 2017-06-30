@@ -412,11 +412,12 @@ extension SomeType: SomeProtocol, AnotherProctocol {
 --------
 扩展可以为已有类型添加计算型实例属性和计算型类型属性
 
+#### 基础类型
+> Note: Swift的基础类型都是结构体，相当于直接对一个定义的结构体做扩展，同时结构体和枚举组成Swift中比较重要的值类型概念
+
+如下：为 Swift 的内建 Double 类型添加了五个计算型实例属性
 
 ```swift
-
-// 基础类型计算型属性扩展
-// 为Swift Double 类型添加了五个计算型实例属性
 extension Double {
     var km: Double { return self / 1000.0 }
     var m : Double { return self }
@@ -424,9 +425,16 @@ extension Double {
     var mm: Double { return self * 1000.0 }
 }
 let distance = Double(7353)
-distance.km
+distance.km // 7.353km
+```
 
-// 结构体计算型属性扩展：与类（引用类型）类似
+#### 结构体（class 类似）
+
+定义一个iOSer结构体，外加一个name属性；
+
+> Note: 由于拓展 work 方法，修改了值类型本身，故需要添加 `mutating` 修饰. 当然我们也可以新建一个方法 `new work`, 返回String字段,结构体本身值不变故不需要 `mutating` 修饰
+
+```swift
 struct iOSer {
     var name: String
 }
@@ -434,9 +442,24 @@ extension iOSer {
     var isValid: Bool {
         return !name.isEmpty
     }
+    mutating func work() {
+        name = name + "_coding_dog"
+    }
+    func newWork() -> String {
+        return name + "_coding_dog"
+    }
 }
+```
 
-// 枚举拓展
+想要理解 `mutating` 是如何工作的，可以查阅在 Swift 中 `inout` 函数参数修饰词；他们行为是相似的；
+```
+
+
+#### 枚举拓展 
+
+详细可参考漫谈《枚举篇》
+
+```swift
 enum AppleDevice {
     case iPhone,iPod,iPad,Mac,iMac
 }
@@ -453,10 +476,9 @@ extension AppleDevice {
 
 支持构造器
 ---------
-扩展可以为已有类型添加新的构造器。
-这可以让你扩展其它类型，将你自己的定制类型作为其构造器参数，或者提供该类型的原始实现中未提供的额外初始化选项。
+扩展可以为已有类型添加新的构造器。这可以让你扩展其它类型，将你自己的定制类型作为其构造器参数，或者提供该类型的原始实现中未提供的额外初始化选项。
 
-> Note: 扩展能为类添加新的便利构造器，但是它们不能为类添加新的指定构造器或析构器。指定构造器和析构器必须总是由原始的类实现来提供。
+> Note: 扩展能为类添加新的便利构造器，但是它们不能为类添加新的指定构造器或析构器。指定构造器和析构器必须总是由原始的类实现来提供。但是结构体你随意,只要构造器可以初始化所有确定属性值就好了（带？的可选值属性可以不理会）
 
 ```swift
 // 参考已有的如上代码：iOSer、Human
@@ -479,8 +501,11 @@ extension Human {
 方法
 -----
 扩展可以为已有类型添加新的实例方法和类型方法、静态方法
+结构体的静态方法相当于引用类型的类型方法
 
 > Note: 结构体的静态方法相当于引用类型的类型方法，类的静态方法和类方法相似，但是static修饰类时是不会被override（重写的），但class可以
+
+如下：结构体没有类型方法
 
 ```swift
 extension iOSer {
@@ -495,6 +520,11 @@ let bp = iOSer.bestPrictise()
 let xcodeyang = iOSer(name: "xy")
 xcodeyang.favoriteLanguage()
 
+```
+
+如下：给人类添加三个扩展方法， coding 方法参数是一个闭包，也可以认为是一个无返回值的匿名函数
+
+```swift
 
 extension Human {
     static func tranlateChinese() -> String {
@@ -522,6 +552,10 @@ me.coding {
 扩展可以为已有的类、结构体和枚举添加新的嵌套类型：
 
 比如结构体里面的枚举等等
+
+> Note: 属性experience 后面有一个闭包，而且有didSet方法；乍一看很想计算型属性，但是它是存储型属性；didSet和willSet是属性被设置的回调函数，相当于观察者模式；可以根据此判断一个属性是不是计算型属性；
+> 
+> 比如：myFavoriteDSL，newJob 是计算型 而 experience和salary是存储型属性
 
 ```swift
 
@@ -591,11 +625,9 @@ extension Int {
 ```
 
 扩展 && 协议
-----------
+------
 详细可以参考漫谈的协议部分，其中包含面向协议编程
 
-通过扩展遵循协议
--------------
 
 ```swift
 
@@ -609,6 +641,15 @@ struct Human {
         return "这个人叫\(name)"
     }
 }
+```
+
+#### 通过扩展遵循协议
+如上：Human 已经实现了 textualDescription方法，故执行加入当前协议即可；
+
+> Note: 这简直看不出有个毛用，但是下面的协议类型转化还是很有用的，即 textProtocal 和 human 两个初始化是一样的只是指向类型不一样；
+> textProtocal 只能调用他的属性textualDescription，但是human实例是可以调用它的两个属性
+
+```swift
 
 extension Human: TextRepresentable {}
 
@@ -618,6 +659,13 @@ textProtocal.textualDescription
 let human = Human(name: "john")
 human.textualDescription
 
+```
+
+> 复习一下，协议属性不管是 set get 都是计算型属性，除非执行协议的类本身就有相同的属性（如上Human），而且是确定性的存储型属性；（Human 那个是确定有值的计算型属性）
+> 
+> Note: 下面的这部分更应该属于协议的范畴而非扩展，协议的继承；
+
+```swift
 
 protocol PrettyTextRepresentable: TextRepresentable {
     var prettyTextualDescription: String { get }
@@ -639,7 +687,11 @@ print(unnamed.prettyTextualDescription)
 
 
 通过扩展遵循协议实现协议的默认实现
-----------------------------
+-------------------------
+
+和上面同名的属性方法不一致的是，可以通过对协议的扩展，实现协议的属性和方法（即默认实现），那不论谁遵守协议，都直接拥有协议的功能；未被默认实现的部分需要再实现如 `gameName` 属性；当然在扩展里也可以重新实现已默认实现的方法属性，不需要override
+
+> 
 
 ```swift
 
@@ -658,7 +710,7 @@ extension PlayGame {
     }
 }
 
-extension Daniel: PlayGame {
+extension Human: PlayGame {
     var gameName: String {
         return "王者荣耀"
     }
@@ -673,7 +725,12 @@ human.endGame()
 为协议扩展添加限制条件
 -----------------
 
+协议扩展默认实现可以针对遵守协议的对象类型做约束（如下），也可以
+
 ```swift
+
+struct Programmer: Human {}
+struct Designer: Human {}
 
 // 娱乐项目
 protocol Entertainment {
@@ -690,40 +747,39 @@ extension Entertainment where Self: Programmer {
     }
 }
 
-extension Entertainment where Self: Producter {
-    // 拓展里只能是计算属性
-    var name: String {
-        return "狼人杀"
-    }
-    func haveFun() {
-        print("来一起玩\(name)，怎么样")
-    }
-}
+extension Programmer: Entertainment {}
 
-
-class Programmer: Entertainment {}
-
-class Producter: Entertainment {}
-
-class Designer: Entertainment {
+extension Designer: Entertainment {
     func haveFun() {
         print("自己看看\(name)")
     }
     var name: String = "动画片"
 }
 
-
 let prog = Programmer()
-prog.haveFun()
-let prod = Producter()
-prod.haveFun()
+prog.haveFun() // 开始玩王者荣耀啦。。
 let desi = Designer()
-desi.haveFun()
+desi.haveFun() // 自己看看动画片
+```
 
+当然更有意义的应当是约束协议实现对象所遵守的另一个协议，而非对象类型
+
+```swift
+extension Entertainment where Self: PlayGame {
+    var name: String {
+        return self.gameName
+    }
+    func haveFun() {
+        print("play \(self.gameName)")
+    }
+}
 ```
 
 集合的运用
 --------
+同理属于对Swift的基础类型的拓展，不用多说；
+
+这里涉及到迭代器的相关知识，后面在深究
 
 ```swift
 
