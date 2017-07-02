@@ -74,22 +74,218 @@ var c: Int
 
 **Kotlin:**
 
-Kotlin 的属性可以自定义 Getter 和 Setter，具体方式如下：
+Kotlin 的属性可以自定义 Getter 和 Setter，具体方式实在属性定义的下一行写上：
 
+```swift
+var stringRepresentation: String
+    get() = this.toString()
+    set(value) {
+        setDataFromString(value) // 解析字符串并赋值给其他属性
+    }
+```
 
 **Swift:**
+
+Swift 总定义属性的 Getter 和 Setter 也是跟在属性的下一行
+
+struct Rect {
+    var origin = CGPoint()
+
+    var center: CGPoint {
+        get {
+            let centerX = origin.x + (size.width / 2)
+            let centerY = origin.y + (size.height / 2)
+            return CGPoint(x: centerX, y: centerY) 
+        }
+        set(newCenter) {
+            origin.x = newCenter.x - (size.width / 2)
+            origin.y = newCenter.y - (size.height / 2)
+        }
+    }
+}
+
 **Kotlin:**
+
+也可以省去 Getter 只写 Setter：
+
+```
+val isEmpty: Boolean
+    get() = this.size == 0
+```
+
 **Swift:**
+
+Swift 中如果只写 Getter 就成了只读属性
+
+```
+var center: CGPoint {
+    get {
+        let centerX = origin.x + (size.width / 2)
+        let centerY = origin.y + (size.height / 2)
+        return CGPoint(x: centerX, y: centerY) 
+    }
+}
+```
+
 **Kotlin:**
-**Swift:**
+
+Kotlin 可以修改 Setter 方法的可见性，但是只能定义比属性本身相等或者更小的可见性，修改可见性的时候可以只定义可见性关键字和 set 关键字。
+
+```kotlin 
+var setterVisibility: String = "abc"
+    private set // 此 setter 是私有的并且有默认实现
+
+var setterWithAnnotation: Any? = null
+    @Inject set // 用 Inject 注解此 setter
+```
+
+**Swift: **
+
+Swift 中大概就是 private(set) 关键字，例如：
+
+```
+private(set) var count: Int
+```
+
+类似的也有 
+
+```
+interval(set) var count: Int
+```
+
 **Kotlin:**
+
+Kotlin 中在 Setter 中给自身赋值，是通过 `支持域`，用 `filed` 关键字来表示。
+
+```
+var counter = 0 // the initializer value is written directly to the backing field
+    set(value) {
+        if (value >= 0) field = value
+    }
+```
+
 **Swift:**
+
+在 Swift 中 Setter 只能定义在计算属性中，而计算属性不需要给自身赋值，没有对应的概念。
+
 **Kotlin:**
+
+Kotlin 中的 Getter，如果想要获取到属性本身的值，需要通过支持属性，支持属性就是将属性通过自定义的访问器完全委托给另外一个相同类型的私有属性。
+
+```kotlin
+private var _table: Map<String, Int>? = null
+public val table: Map<String, Int>
+    get() {
+        if (_table == null) {
+            _table = HashMap() // Type parameters are inferred
+        }
+        return _table ?: throw AssertionError("Set to null by another thread")
+    }
+```
+
 **Swift:**
+
+在 Objective-C 中有这种概念，Swift 中的 Setter 只能用在计算属性中，而计算属性时不允许读取自身的值的，因为自身并不保存值。
+
 **Kotlin:**
+
+下面再说说编译期常亮，已知值的属性可以使用 const 修饰符标记为 编译期常量。
+
+```
+const val SUBSYSTEM_DEPRECATED: String = "This subsystem is deprecated"
+```
+
 **Swift:**
+
+Swift 一般把常量定义在类型的外部，例如：
+
+```
+private let intConstant = 30
+
+class A {
+    // ...
+}
+```
+
 **Kotlin:**
+
+Kotlin 中可以用 `lateinit` 关键字来让一个属性延迟加载
+
+```
+public class MyTest {
+    lateinit var subject: TestSubject
+}
+```
+
 **Swift:**
+
+Swift 中是 `lazy`
+
+```
+publpublic class MyTest {
+    lazy var subject: TestSubject
+}
+```
+
+**Kotlin:**
+
+使用 `lateinit` 关键字有一些限制，
+
+- 只能用于在一个类的主体内声明的var属性（不在主构造函数中）
+- 该属性没有自定义的getter或setter
+- 属性的类型必须为非空，并且不能为原始类型
+
+当访问一个还没有被初始化的延迟加载属性，会抛出相应的异常，告知该属性还未被初始化。
+
+**Swift:**
+
+Swift 的延迟加载属性也只能定义成 var。
+
+**Kotlin:**
+
+官方推荐另外一个委托属性的应用就是 `Observable`，让属性在发生变动的时候可以被关注的地方观察到。
+
+```kotlin
+class User {
+    var name: String by Delegates.observable("<no name>") {
+        prop, old, new ->
+        println("$old -> $new")
+    }
+}
+
+fun main(args: Array<String>) {
+    val user = User()
+    user.name = "first"
+    user.name = "second"
+}
+```
+
+**Swift:**
+
+在 Swift 中对应就是 willSet、didSet。
+
+```
+class StepCounter {
+    var totalSteps: Int = 0 {
+        willSet(newTotalSteps) {
+            print("About to set totalSteps to \(newTotalSteps)")
+        }
+        didSet {
+            if totalSteps > oldValue  {
+                print("Added \(totalSteps - oldValue) steps")
+            }
+        }
+    }
+}
+```
+
+**Kotlin:**
+
+今天属性就到这里吧，下次见！
+
+**Swift:**
+
+下次见！
 
 # 技术知识
 
