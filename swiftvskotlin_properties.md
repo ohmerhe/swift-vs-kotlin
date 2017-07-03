@@ -189,6 +189,14 @@ public val table: Map<String, Int>
 
 **Kotlin:**
 
+Kotlin 有个属性委托的概念，可以吧 Getter 和 Setter 交给另一个类来实现。
+
+**Swift:**
+
+Swift 中没有。
+
+**Kotlin:**
+
 下面再说说编译期常亮，已知值的属性可以使用 const 修饰符标记为 编译期常量。
 
 ```
@@ -209,17 +217,27 @@ class A {
 
 **Kotlin:**
 
-Kotlin 中可以用 `lateinit` 关键字来让一个属性延迟加载
+Kotlin 中的延迟加载有两个关键字 `lateinit` 和 `lazy`  
+`lateinit` 用在 var 属性上 
+`lazy` 用在 let 属性上
 
 ```
 public class MyTest {
     lateinit var subject: TestSubject
+
+    @SetUp fun setup() {
+        subject = TestSubject()
+    }
+
+    @Test fun test() {
+        subject.method()  // dereference directly
+    }
 }
 ```
 
 **Swift:**
 
-Swift 中是 `lazy`
+Swift 只有一个 `lazy`，只能用在 var 属性上。
 
 ```
 publpublic class MyTest {
@@ -276,6 +294,36 @@ class StepCounter {
             }
         }
     }
+}
+```
+
+**Kotlin:**
+
+最后来看看属性覆盖
+
+属性覆盖和函数覆盖类似，需要使用 `open` 和 `override` 关键字，覆盖属性的类型必须兼容。每个声明的属性可以被具有初始化器的属性或具有getter方法的属性覆盖。
+
+```
+open class Foo {
+    open val x: Int get { ... }
+}
+
+class Bar1 : Foo() {
+    override val x: Int = ...
+}
+```
+
+**Swift:**
+
+Swift 中也是这两个关键字：
+
+```
+open class Foo {
+    open var x: Int
+}
+
+class Bar1: Foo {
+    override var x: Int
 }
 ```
 
