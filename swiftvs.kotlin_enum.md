@@ -219,3 +219,14 @@ func sameDevice(_ firstDevice: AppleDevice, secondDevice: AppleDevice) -> Bool {
 print(sameDevice(myIPhone6s, secondDevice: myIPhone4s))
 
 ```
+
+枚举 enum
+
+枚举类的最基本的用法是实现类型安全的枚举，即 Week.Monday的形式（每一个枚举都是这个枚举类的实例而且不提供公共的构造方法）。
+```kotlin
+enum class Week {
+    Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+}
+```
+
+
