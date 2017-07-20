@@ -1,3 +1,101 @@
+# Swift vs. Kotlin 漫谈之枚举
+
+
+`王者荣耀`
+
+
+***Swift:***
+
+Kotlin 君，我最近打王者荣耀排位上钻石了；
+
+***Kotlin***
+
+哦是吗！Swift君厉害了，我最高的一次就只是在铂金V
+
+***Swift***
+
+排位越上越难打，最近`王者荣耀`的爆料新闻很多啊，你说同样是Coder，怎么差距就是这么大？
+
+***Kotlin***
+
+那都是名啊，今天我们PK的是枚举技术，要不我们就拿王者荣耀来练练手？
+
+***Swift***
+
+好主意，意淫一下当`王者荣耀`的coder是啥感觉；
+
+```swift
+enum KingGloryType {
+    case Marksman, Mage, Assassin, Tank, Fighter, Support
+}
+
+let myFavoriteHeroType: KingGloryType = .Assassin
+```
+我的最爱是刺客，嘿嘿 😜
+
+***Kotlin***
+
+呦，差不多啊。区别还是我们一切写对象，但是你们
+
+```kotlin
+enum class KingGloryType {
+    Marksman, Mage, Assassin, Tank, Fighter, Support
+}
+```
+
+***Swift***
+
+确实很像，但若是更根据做细分，Swift枚举可以支持枚举嵌套，也可以设置枚举值（rawValue）
+
+```swift
+enum KingGloryType_II {
+    enum Tank:String {
+        case arthur = "亚瑟"
+        case lvbu = "吕布"
+    }
+    enum Mage:String {
+        case agnel = "安其拉"
+        case fire = "火舞"
+    }
+    enum Assassin:String {
+        case Athena = "雅典娜"
+        case Luna = "露娜"
+    }
+}
+
+let bestAssassin = KingGloryType_II.Assassin.Luna
+bestAssassin.rawValue  // "露娜"
+```
+
+
+***Kotlin***
+
+厉害这个我们没有
+
+
+***Swift***
+
+枚举：携带参数
+
+
+***Kotlin***
+
+
+
+***Swift***
+
+
+
+***Kotlin***
+
+
+
+***Swift***
+
+
+
+***Kotlin***
+
 
 
 
