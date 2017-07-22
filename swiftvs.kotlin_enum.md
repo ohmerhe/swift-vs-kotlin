@@ -439,3 +439,34 @@ enum class Person(var type: Int): onClickListener{
 ```
 
 ###密封类
+在使用When表达式的时候，编译器会检查default选项，所以我们常常需要加上else来防止出现其他情况，像这样
+```kotlin
+interface Expr
+class Num(val value: Int) : Expr
+class Sum(val left: Expr, val right: Expr) : Expr
+fun eval(e: Expr): Int =
+when (e) {
+is Num -> e.value
+is Sum -> eval(e.right) + eval(e.left)
+else ->
+throw IllegalArgumentException("Unknown expression")
+}
+```
+而且，如果我们添加一个子类，就需要再创建一个分支，如果忘记的话很可能出现问题。
+
+密封类很好的解决了这个问题
+虽然密封类也可以有子类，但是所有子类都必须在与密封类自身相同的文件中声明
+```kotlin
+sealed class Expr {          //要声明一个密封类，需要在类名前面添加 sealed 修饰符。
+class Num(val value: Int) : Expr()
+class Sum(val left: Expr, val right: Expr) : Expr()
+}
+fun eval(e: Expr): Int =
+when (e) {
+is Expr.Num -> e.value
+is Expr.Sum -> eval(e.right) + eval(e.left)
+// 不再需要 `else` 子句，因为我们已经覆盖了所有的情况
+}
+```
+使用密封类的关键好处在于使用 when 表达式 的时候，如果能够验证语句覆盖了所有情况，就不需要为该语句再添加一个 else 子句了。
+请注意，扩展密封类子类的类（间接继承者）可以放在任何位置，而无需在同一个文件中
