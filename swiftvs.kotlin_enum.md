@@ -221,12 +221,123 @@ print(sameDevice(myIPhone6s, secondDevice: myIPhone4s))
 ```
 
 枚举 enum
-
-枚举类的最基本的用法是实现类型安全的枚举，即 Week.Monday的形式（每一个枚举都是这个枚举类的实例而且不提供公共的构造方法）。
 ```kotlin
-enum class Week {
-    Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+enum class Color(val r: Int, val g: Int, val b: Int) {
+RED(255, 0, 0), ORANGE(255, 165, 0),
+YELLOW(255, 255, 0), GREEN(0, 255, 0), BLUE(0, 0, 255),
+INDIGO(75, 0, 130), VIOLET(238, 130, 238);
+
+fun getWarmth(color: Color) = when(color)
+{ Color.RED, Color.ORANGE, Color.YELLOW ->"warm" 
+  Color.GREEN -> "neutral"
+  Color.BLUE, Color.INDIGO, Color.VIOLET -> "cold"
 }
 ```
 
+###枚举
+枚举类的最基本的用法是实现类型安全的枚举，即 Week.Monday的形式（每一个枚举常量都是这个枚举类的实例而且不提供公开的构造方法）。
+```kotlin
+enum class Lang {
+    PHP, Java, OC, Python, Ruby, Go, Swift, Kotlin
+}
+```
+枚举类的主构造函数默认是私有的。如果对每个枚举常数设置属性值，需在主构造函数里进行声明，并且在枚举常量处初始化
+```kotlin
+enum class Week(var i:int) {
+    Monday(1), Tuesday(2), Wednesday(3), Thursday(4), Friday(5), Saturday(6),Sunday(0)
+}
+```
+就像在 Java 中一样，Kotlin 中的枚举类也有合成方法允许列出所有定义的枚举常量以及通过名称获取枚举常量
+```kotlin
+valueof(value:String)  //转换指定name为枚举值，若未匹配成功，会抛出IllegalArgumentException
+values() //以数组的形式，返回枚举值
 
+val week = Week.valueof("Monday")
+val weeks: Array<Week> = Week.values()
+```
+
+自 Kotlin 1.1 起，可以使用 enumValues<T>() 和 enumValueOf<T>() 函数以泛型的方式访问枚举类中的常量 ：
+```kotlin
+enum class RGB { RED, GREEN, BLUE }
+
+inline fun <reified T : Enum<T>> printAllValues() {
+    print(enumValues<T>().joinToString { it.name })
+}
+
+printAllValues<RGB>() // 输出 RED, GREEN, BLUE
+```
+
+```kotlin
+name():String //获取枚举名称
+ordinal():Int //获取枚举值在所有枚举数组中定义的顺序
+
+Week.Monday.name //Monday
+Week.Monday.ordinal //1
+```
+###匿名类与抽象方法
+在枚举类中声明了抽象方法，所有的枚举常量都应声明其匿名类，并在匿名类中实现枚举类中声明的抽象方法。
+```kotlin
+enum class Person(var type: Int) {
+    STUDENT(1) {
+        override fun getPerson(ordinal: Int): Person {
+            return Person.values()[ordinal]
+        }
+
+        fun doClick() {
+            println("student do click")
+        }
+    },
+    TEACHER(2) {
+        override fun getPerson(ordinal: Int): Person {
+            return Person.values()[ordinal]
+        }
+    },
+    DEAN(3) {
+        override fun getPerson(ordinal: Int): Person {
+            return Person.values()[ordinal]
+        }
+    },
+    PRINCIPAL(4) {
+        override fun getPerson(ordinal: Int): Person {
+            return Person.values()[ordinal]
+        }
+    };
+
+    abstract fun getPerson(ordinal: Int): Person
+}
+
+// Test
+val  per = Person.STUDENT
+println("getPerson:${per.getPerson(1)}") // 打印：getPerson:TEACHER
+```
+如果枚举类中定义了任何成员, 你需要用分号将枚举常数的定义与枚举类的成员定义分隔开.
+匿名内部类中声明的方法，并不能在外部使用，即使是其枚举类型的实例，也不可调用。但重写的枚举类中声明的方法，可以被其实例调用。
+###枚举类与接口
+枚举类实现接口的情况与抽象方法类似，所有的枚举常量都应在其匿名类中实现接口的方法
+```kotlin
+enum class Person(var type: Int): onClickListener{
+    STUDENT(1) {
+        override fun onClick() {
+            println("on click")
+        }
+    },
+    TEACHER(2) {
+        override fun onClick() {
+            println("on click")
+        }
+    },
+    DEAN(3) {
+        override fun onClick() {
+            println("on click")
+        }
+    },
+    PRINCIPAL(4) {
+        override fun onClick() {
+            println("on click")
+        }
+    };
+
+}
+```
+
+###密封类
