@@ -75,26 +75,89 @@ bestAssassin.rawValue  // "露娜"
 
 ***Swift***
 
-枚举：携带参数
-
+我介绍几个英雄给你吧，比如灵活强悍的露娜、李白。其中露娜算是最能秀的英雄没有之一，当然难度也比较大。
 
 ***Kotlin***
 
-
+我不行，我初学者能力有限。你推荐一些英雄顺便附带一些难度说明吧
 
 ***Swift***
 
+定义英雄类型坦克，法师，刺客；
 
+```swift
+enum HeroType {
+    case tank(difficulty: Float)
+    case mage(difficulty: Float, reason: String)
+    case assassin(difficulty: Float, reason: String)
+}
+
+enum RecommendHero: str {
+    case Athena(type: HeroType)
+    case Luna(type: HeroType)
+}
+```
+
+实现一个推荐英雄及辨识他的方法
+
+```swift
+let luna = Hero.Luna(type: .assassin(difficulty: 0.9, reason:"不可断大，月下无限连"))
+
+if case Hero.Luna(type: .assassin(let difficulty, let reason)) = luna {
+    // 难度系数
+    print("露娜难度系数+\(difficulty),注意事项:\(reason)")
+}
+
+```
 
 ***Kotlin***
 
-
+这好强大。if case 取值的方式有点特别啊！！坦克英雄不用解释原因是因为比较简单？
 
 ***Swift***
 
+bingo！老话说：**法师靠预判 射手靠走位 打野靠的是意识**，但也不能怎么说，毕竟这是靠团队协作的游戏。
+
+`if case` 取值是其实和guard模式差不多，不然还得一一遍历枚举的个个case？书写效率太低
+
+其实上面的还可以做优化，要是参数再多几个影响书写和阅读，加入元组可以增加可读性；
+
+```swift
+
+typealias DifficultyInfo = (difficulty: Float, reason: String)
+
+enum HeroType {
+    case tank(info: DifficultyInfo)
+    case mage(info: DifficultyInfo)
+    case assassin(info: DifficultyInfo)
+}
+
+enum Hero {
+    case Athena(type: HeroType)
+    case Luna(type: HeroType)
+}
+
+let luna = Hero.Luna(type: .assassin(info: (0.9, "不可断大，月下无限连")))
+
+if case Hero.Luna(type: .assassin(let info)) = luna {
+    // 难度系数
+    print("露娜难度系数+\(info.difficulty),注意事项:\(info.reason)")
+}
+```
 
 
 ***Kotlin***
+
+。。。。。
+
+***Swift***
+
+游戏初始就有金币，关于枚举还有很多很多数不完的运用，效果差不多，还不快去先下载王者荣耀试试。
+
+***Kotlin***
+
+哈哈哈，一起开黑啊！
+
 
 
 
@@ -103,57 +166,9 @@ bestAssassin.rawValue  // "露娜"
 ==========
 > 枚举的强大犹如Stuct一般,这里做简单介绍（包括协议、拓展等和struct相同的知识点以后一起串讲）
 
-演示
----
-这是一个动画的枚举示例 -> 手机投屏演示 (gif待添加)
-
-```swift
-enum AnimationPeriod: Int {
-    // 动画执行的五个阶段
-    case start = 0, first, second, third, end
-
-    func description() -> String {
-        switch self {
-        case .start, .first:    return "正在提取学校最新\n录取条件"
-        case .second:           return "正在与学校进行匹配"
-        case .third, .end:      return "正在根据匹配结果\n生成选校方案"
-        }
-    }
-    // 枚举等不可添加存储类型的变量
-    var duration: TimeInterval {
-        switch self {
-        case .start:    return 0.8
-        case .first:    return 1
-        case .second:   return 2
-        case .third:    return 0.5
-        case .end:      return 0.25
-        }
-    }
-}
-
-extension AnimationPeriod {
-    // mutating 关键字修饰：自身被修改
-    mutating func next() {
-        if rawValue < AnimationPeriod.end.rawValue {
-            self = AnimationPeriod(rawValue: rawValue+1)!
-        }
-    }
-}
-
-var animate = AnimationPeriod.third
-if animate == .third {
-    print("动画在第三阶段")
-}
-animate.rawValue
-animate.next()
-animate.rawValue
-animate.next()
-animate.rawValue
-
-```
-
 枚举：简单枚举
 ------------
+基础枚举
 
 ```swift
 enum LOL {
@@ -163,9 +178,32 @@ enum LOL {
 let myHero: LOL = .Marksman
 ```
 
+在 C 语言中，枚举会为一组整型值分配相关联的名称。Swift 中的枚举更加灵活，不必给每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为“原始”值），则该值的类型可以是字符串，字符，或是一个整型值或浮点数。
+
+```swift
+enum Tank:String {
+    case arthur = "亚瑟"
+    case lvbu = "吕布"
+}
+
+let myHeroTank = Tank.lvbu
+myHeroTank.rawValue // "吕布"
+
+switch myHeroTank {
+case .arthur:
+    print("这个英雄是亚瑟")
+case .lvbu:
+    print("这个英雄是吕布") // ✅
+default:
+    print("这个英雄未知")
+}
+
+```
 
 枚举：嵌套枚举 👍
 ------------
+
+枚举里嵌套枚举，和类中嵌套类，方法中嵌套方法是一样可行；
 
 ```swift
 enum LOL_II {
@@ -332,7 +370,7 @@ fun getWarmth(color: Color) = when(color)
 }
 ```
 
-###枚举
+### 枚举
 枚举类的最基本的用法是实现类型安全的枚举，即 Week.Monday的形式（每一个枚举常量都是这个枚举类的实例而且不提供公开的构造方法）。
 ```kotlin
 enum class Lang {
@@ -372,7 +410,7 @@ ordinal():Int //获取枚举值在所有枚举数组中定义的顺序
 Week.Monday.name //Monday
 Week.Monday.ordinal //1
 ```
-###匿名类与抽象方法
+### 匿名类与抽象方法
 在枚举类中声明了抽象方法，所有的枚举常量都应声明其匿名类，并在匿名类中实现枚举类中声明的抽象方法。
 ```kotlin
 enum class Person(var type: Int) {
@@ -410,7 +448,7 @@ println("getPerson:${per.getPerson(1)}") // 打印：getPerson:TEACHER
 ```
 如果枚举类中定义了任何成员, 你需要用分号将枚举常数的定义与枚举类的成员定义分隔开.
 匿名内部类中声明的方法，并不能在外部使用，即使是其枚举类型的实例，也不可调用。但重写的枚举类中声明的方法，可以被其实例调用。
-###枚举类与接口
+### 枚举类与接口
 枚举类实现接口的情况与抽象方法类似，所有的枚举常量都应在其匿名类中实现接口的方法
 ```kotlin
 enum class Person(var type: Int): onClickListener{
@@ -438,7 +476,7 @@ enum class Person(var type: Int): onClickListener{
 }
 ```
 
-###密封类
+### 密封类
 在使用When表达式的时候，编译器会检查default选项，所以我们常常需要加上else来防止出现其他情况，像这样
 ```kotlin
 interface Expr
