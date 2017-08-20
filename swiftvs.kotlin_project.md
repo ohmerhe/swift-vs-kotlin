@@ -1,4 +1,13 @@
-# 参与《Swift vs. Kotlin 漫谈》系列
+title: 参与《Swift vs. Kotlin 漫谈》系列
+date: 2017-05-22 12:53:10
+tags: 
+- Kotlin
+- Swift
+  
+thumbnail: http://7xpox6.com1.z0.glb.clouddn.com/image/index-page-header-bg.jpg?imageView2/1/w/200
+banner: http://7xpox6.com1.z0.glb.clouddn.com/image/index-page-header-bg.jpg?imageView2/1/w/1024/h/460 
+
+---
 
 无论你是 Kotlin 开发者，
 
@@ -42,24 +51,24 @@
 ### 函数定义（已完成）
 ### 基本类型和操作（已完成）
 ### 控制流（已完成）
-### 命名规范(Kotlin 编辑中...)
+### 命名规范(Kotlin 知识点部分已完成)
 
 ## 类与对象
 
-### 类与继承（包含内部类）（Swift 编辑中...）
-### 属性(Kotlin 编辑中...)
-### 接口(Swift 编辑中...)
+### 类与继承（包含内部类）（已完成）
+### 属性（已完成）
+### 接口（已完成）
 ### 可见性
-### 类的扩展 (Swift 编辑中...)@xcodeyang
+### 类的扩展 （已完成）@xcodeyang
 ### 数据类
 ### 枚举（包含密封类）(Swift 编辑中...)@xcodeyang
-### 泛型
+### 泛型（已完成）
 ### 委托
 
 ## 函数与表达式
 
 ### 函数与表达式（包含内联函数）
-### 高级函数
+### 高阶函数
 ### 协同程序
 
 ## 语言特性
