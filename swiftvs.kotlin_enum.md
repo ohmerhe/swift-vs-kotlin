@@ -166,8 +166,8 @@ if case Hero.Luna(type: .assassin(let info)) = luna {
 ==========
 > 枚举的强大犹如Stuct一般,这里做简单介绍（包括协议、拓展等和struct相同的知识点以后一起串讲）
 
-枚举：简单枚举
-------------
+### 枚举：简单枚举
+
 基础枚举
 
 ```swift
@@ -200,8 +200,7 @@ default:
 
 ```
 
-枚举：嵌套枚举 👍
-------------
+### 枚举：嵌套枚举 👍
 
 枚举里嵌套枚举，和类中嵌套类，方法中嵌套方法是一样可行；
 
@@ -226,9 +225,11 @@ myHeroII.rawValue
 ```
 
 
-枚举：携带参数 👍🏻👍🏻
-------------
+### 枚举：携带参数 👍🏻👍🏻
+
 > 携带参数，参数可以是元组，闭包，一样也可以是枚举
+
+例子1：王者荣耀英雄
 
 ```swift
 enum HeroType {
@@ -247,7 +248,11 @@ if case Hero.Luna(type: .assassin(let difficulty)) = luna {
     // 难度系数
     difficulty
 }
+```
 
+例子2：家庭成员
+
+```swift
 enum FamilyType {
     case father(age: Int)
     case mother(age: Int)
@@ -276,12 +281,10 @@ let sisterGift = sister.gift
 let motherGift = mother.gift
 ```
 
-
-枚举取值的方法
-------------
-
+### 枚举取值的方法
 
 ```swift
+//: 常见的
 switch sister {
 case .father(let age):
     age
@@ -294,8 +297,11 @@ default:()
 if case .sister(let age) = sister {
     age
 }
+```
+### 枚举的初始化方法
+枚举构造器
 
-//: 枚举的初始化方法
+```swift
 enum AppleDevice {
     case iMac(price:Int)
     case iPod(price:Int)
@@ -311,6 +317,28 @@ enum AppleDevice {
     }
 }
 let myDevice = AppleDevice(costMoney: 6000)
+```
+
+### switch对象或元祖
+> switch方法可以执行辨别两个对象，或者元组
+
+```swift 
+var myIPhone6s = AppleDevice.iPhone(price: 6088)
+var myIPhone4s = AppleDevice.iPhone(price: 2000)
+
+func sameDevice(_ firstDevice: AppleDevice, secondDevice: AppleDevice) -> Bool {
+    switch (firstDevice, secondDevice) {
+    case (.iPhone(let a), .iPhone(let b)) where a == b:
+        return true
+    case (.iPod(let a), .iPod(let b)) where a == b:
+        return true
+    case (.iMac, .iMac):
+        return true
+    default:
+        return false
+    }
+}
+print(sameDevice(myIPhone6s, secondDevice: myIPhone4s))
 ```
 
 元祖结合
@@ -333,30 +361,10 @@ enum Desktop {
 }
 let aTower = Desktop.Tower((20, "XcodeYang", .Traveling) as HumanInfo)
 let Cube = Desktop.Cube((21, "XcodeYang", .PlayGame))
-
-
-//: switch对象：元祖
-var myIPhone6s = AppleDevice.iPhone(price: 6088)
-var myIPhone4s = AppleDevice.iPhone(price: 2000)
-
-func sameDevice(_ firstDevice: AppleDevice, secondDevice: AppleDevice) -> Bool {
-    switch (firstDevice, secondDevice) {
-    case (.iPhone(let a), .iPhone(let b)) where a == b:
-        return true
-    case (.iPod(let a), .iPod(let b)) where a == b:
-        return true
-    case (.iMac, .iMac):
-        return true
-    default:
-        return false
-    }
-}
-
-print(sameDevice(myIPhone6s, secondDevice: myIPhone4s))
-
 ```
 
-枚举 enum
+## 枚举 enum - kotlin
+
 ```kotlin
 enum class Color(val r: Int, val g: Int, val b: Int) {
 RED(255, 0, 0), ORANGE(255, 165, 0),
@@ -372,18 +380,21 @@ fun getWarmth(color: Color) = when(color)
 
 ### 枚举
 枚举类的最基本的用法是实现类型安全的枚举，即 Week.Monday的形式（每一个枚举常量都是这个枚举类的实例而且不提供公开的构造方法）。
+
 ```kotlin
 enum class Lang {
     PHP, Java, OC, Python, Ruby, Go, Swift, Kotlin
 }
 ```
 枚举类的主构造函数默认是私有的。如果对每个枚举常数设置属性值，需在主构造函数里进行声明，并且在枚举常量处初始化
+
 ```kotlin
 enum class Week(var i:int) {
     Monday(1), Tuesday(2), Wednesday(3), Thursday(4), Friday(5), Saturday(6),Sunday(0)
 }
 ```
 就像在 Java 中一样，Kotlin 中的枚举类也有合成方法允许列出所有定义的枚举常量以及通过名称获取枚举常量
+
 ```kotlin
 valueof(value:String)  //转换指定name为枚举值，若未匹配成功，会抛出IllegalArgumentException
 values() //以数组的形式，返回枚举值
@@ -393,6 +404,7 @@ val weeks: Array<Week> = Week.values()
 ```
 
 自 Kotlin 1.1 起，可以使用 enumValues<T>() 和 enumValueOf<T>() 函数以泛型的方式访问枚举类中的常量 ：
+
 ```kotlin
 enum class RGB { RED, GREEN, BLUE }
 
@@ -412,6 +424,7 @@ Week.Monday.ordinal //1
 ```
 ### 匿名类与抽象方法
 在枚举类中声明了抽象方法，所有的枚举常量都应声明其匿名类，并在匿名类中实现枚举类中声明的抽象方法。
+
 ```kotlin
 enum class Person(var type: Int) {
     STUDENT(1) {
@@ -450,6 +463,7 @@ println("getPerson:${per.getPerson(1)}") // 打印：getPerson:TEACHER
 匿名内部类中声明的方法，并不能在外部使用，即使是其枚举类型的实例，也不可调用。但重写的枚举类中声明的方法，可以被其实例调用。
 ### 枚举类与接口
 枚举类实现接口的情况与抽象方法类似，所有的枚举常量都应在其匿名类中实现接口的方法
+
 ```kotlin
 enum class Person(var type: Int): onClickListener{
     STUDENT(1) {
