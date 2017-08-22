@@ -41,6 +41,8 @@ let myFavoriteHeroType: KingGloryType = .Assassin
 enum class KingGloryType {
     Marksman, Mage, Assassin, Tank, Fighter, Support
 }
+
+val myFavoriteHeroType: KingGloryType = KingGloryType.Fighter
 ```
 
 ***Swift***
@@ -70,7 +72,38 @@ bestAssassin.rawValue  // "露娜"
 
 ***Kotlin***
 
-厉害这个我们没有
+厉害!这个特性kotlin没有，而且对于我这个菜鸟来说，连那几个英雄都分不清，他们在我手里都是一套打法——无脑往上冲...
+
+```kotlin
+//自 Kotlin 1.1 起，可以使用 enumValues () 和 enumValueOf () 函数以泛型的方式访问枚举类中的常量 
+enum class Tank {
+        "亚瑟","吕布"
+    }
+enum class Mage {
+        "安其拉","火舞"
+    }
+enum class Assassin {
+        "雅典娜","露娜"
+    }
+
+inline fun <reified T : Enum<T>> printAllValues() {
+    print(enumValues<T>().joinToString { it.name })  //name类似Swift的rawValue
+
+inline fun <reified T : Enum<T>> printValueOf(name: String) {
+    print( enumValueOf<T>(name))
+}
+
+printAllValues<Tank>() //"亚瑟","吕布"
+printAllValues<Mage>() //"安其拉","火舞"
+printAllValues<Assassin>() //"雅典娜","露娜"
+
+printValueOf<Tank>("亚瑟") //"亚瑟"
+printValueOf<Tank>("火舞") //"火舞"
+printValueOf<Tank>("雅典娜") //"雅典娜"
+
+}
+
+```
 
 
 ***Swift***
@@ -147,7 +180,13 @@ if case Hero.Luna(type: .assassin(let info)) = luna {
 
 
 ***Kotlin***
-
+```kotlin
+fun getWarmth(type: HeroType) = when(type)
+{ HeroType.tank ->"..." 
+  HeroType.mage -> "...."
+  HeroType.assassin -> "....."
+}
+```
 。。。。。
 
 ***Swift***
