@@ -35,7 +35,7 @@ let myFavoriteHeroType: KingGloryType = .Assassin
 
 ***Kotlin***
 
-呦，差不多啊。区别还是我们一切写对象，但是你们
+呦，差不多啊。区别还是我们是一切皆对象（引用类型对象），但你们枚举是对象(enum)但不是引用类型对象（class）
 
 ```kotlin
 enum class KingGloryType {
@@ -72,7 +72,7 @@ bestAssassin.rawValue  // "露娜"
 
 ***Kotlin***
 
-厉害!这个特性kotlin没有，而且对于我这个菜鸟来说，连那几个英雄都分不清，他们在我手里都是一套打法——无脑往上冲...
+厉害!这个特性kotlin没有，而且对于我这个菜鸟来说，所有的英雄都差不多，他们在我手里都是一套打法——无脑往上冲...
 
 ```kotlin
 //自 Kotlin 1.1 起，可以使用 enumValues () 和 enumValueOf () 函数以泛型的方式访问枚举类中的常量 
@@ -180,14 +180,17 @@ if case Hero.Luna(type: .assassin(let info)) = luna {
 
 
 ***Kotlin***
+哦哦，有了老司机的指点，瞬间我就get到了王者的精髓，你看看我总结的打法:
+
 ```kotlin
-fun getWarmth(type: HeroType) = when(type)
-{ HeroType.tank ->"..." 
-  HeroType.mage -> "...."
-  HeroType.assassin -> "....."
+fun KingGloryPlay(type: HeroType) = when(type)
+{ HeroType.tank ->"拉怪" 
+  HeroType.mage -> "输出&控制"
+  HeroType.assassin -> "输出"
+  ...
 }
 ```
-。。。。。
+哈哈哈，不说了，我要打排位去了。
 
 ***Swift***
 
