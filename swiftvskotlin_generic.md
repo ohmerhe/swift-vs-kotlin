@@ -1,4 +1,4 @@
-# Swift vs. Kotlin 漫谈系列之类与继承
+# Swift vs. Kotlin 漫谈系列之泛型
 
 《Swift vs. Kotlin 漫谈》系列经过一段时间已经有一些积累了，如果想要查看之前的漫谈系列，可以点击上面的 KotlinThree 关注我们的公众号，目录有之前的所有文章。
 
