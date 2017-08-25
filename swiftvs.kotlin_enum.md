@@ -570,7 +570,7 @@ throw IllegalArgumentException("Unknown expression")
 sealed class Expr {          //要声明一个密封类，需要在类名前面添加 sealed 修饰符。
 class Num(val value: Int) : Expr()
 class Sum(val left: Expr, val right: Expr) : Expr()
-}
+}  //在 Kotlin 1.1 之前，子类必须嵌套在密封类声明的内部,1.1之后可去掉嵌套
 fun eval(e: Expr): Int =
 when (e) {
 is Expr.Num -> e.value
