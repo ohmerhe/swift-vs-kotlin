@@ -10,19 +10,21 @@ Kotlin 君，我最近打王者荣耀排位上钻石了；
 
 ***Kotlin***
 
-哦是吗！Swift君厉害了，我最高的一次就只是在铂金V
+哦是吗！听起来Swift君很厉害的样子，我一次都没有玩过啊，给说说看看。
 
 ***Swift***
 
-排位越上越难打，最近`王者荣耀`的爆料新闻很多啊，你说同样是Coder，怎么差距就是这么大？
+排位等级越高越难打，铂金以下都很简单。`王者荣耀`这么火你居然没有玩过？最近它的年终奖新闻传闻很爆炸，你说同样是Coder，怎么差距就是这么大？
 
 ***Kotlin***
 
-那都是名啊，今天我们PK的是枚举技术，要不我们就拿王者荣耀来练练手？
+谁让他是国名游戏，今天我们PK的是枚举技术，要不我们就拿王者荣耀来练练手？
 
 ***Swift***
 
 好主意，意淫一下当`王者荣耀`的coder是啥感觉；
+
+定义一下游戏里的游戏角色：ADC，法师，刺客，坦克，战士，辅助
 
 ```swift
 enum KingGloryType {
@@ -35,7 +37,7 @@ let myFavoriteHeroType: KingGloryType = .Assassin
 
 ***Kotlin***
 
-呦，差不多啊。区别还是我们是一切皆对象（引用类型对象），但你们枚举是对象(enum)但不是引用类型对象（class）
+呦，差不多啊。
 
 ```kotlin
 enum class KingGloryType {
@@ -44,10 +46,11 @@ enum class KingGloryType {
 
 val myFavoriteHeroType: KingGloryType = KingGloryType.Fighter
 ```
+区别就是我们是一切皆是引用类型对象，但你们枚举是值类型对象
 
 ***Swift***
 
-确实很像，但若是更根据做细分，Swift枚举可以支持枚举嵌套，也可以设置枚举值（rawValue）
+确实很像，但若是更根据做细分，Swift枚举可以支持枚举嵌套，也可以设置枚举值及类型（rawValue）
 
 ```swift
 enum KingGloryType_II {
@@ -105,8 +108,9 @@ printValueOf<Tank>("雅典娜") //"雅典娜"
 
 ```
 
-
 ***Swift***
+
+嘿嘿，这套Swift技能可把你们比下去了
 
 我介绍几个英雄给你吧，比如灵活强悍的露娜、李白。其中露娜算是最能秀的英雄没有之一，当然难度也比较大。
 
@@ -116,7 +120,7 @@ printValueOf<Tank>("雅典娜") //"雅典娜"
 
 ***Swift***
 
-定义英雄类型坦克，法师，刺客；
+好，我来定义一下英雄类型、难度及注意事项，适合新手挑选
 
 ```swift
 enum HeroType {
@@ -145,18 +149,20 @@ if case Hero.Luna(type: .assassin(let difficulty, let reason)) = luna {
 
 ***Kotlin***
 
-这好强大。if case 取值的方式有点特别啊！！坦克英雄不用解释原因是因为比较简单？
+Swift 的 if case 枚举取值的方式有点特别啊！！
+
+“月下无限连”听起来好强大的感觉，那坦克英雄不用注意事项是因为比较简单？
 
 ***Swift***
 
-bingo！老话说：**法师靠预判 射手靠走位 打野靠的是意识**，但也不能怎么说，毕竟这是靠团队协作的游戏。
+bingo！俗话说：**法师靠预判 射手靠走位 打野靠的是意识**，这里都没有坦克的事情，哈哈哈；但毕竟这是靠团队协作的游戏，谁都是缺一不可的。
 
-`if case` 取值是其实和guard模式差不多，不然还得一一遍历枚举的个个case？书写效率太低
+Swift的`if case` 取值和`if let`是一样的，和guard模式差不多，不然还得一一遍历枚举的个个case？书写效率太低
 
-其实上面的还可以做优化，要是参数再多几个影响书写和阅读，加入元组可以增加可读性；
+倘若要是参数再多几个的话，会直接影响代码书写和阅读，优化方案可以加入元组
 
 ```swift
-
+// 设置元组，多参数替换成单一参数
 typealias DifficultyInfo = (difficulty: Float, reason: String)
 
 enum HeroType {
@@ -180,17 +186,16 @@ if case Hero.Luna(type: .assassin(let info)) = luna {
 
 
 ***Kotlin***
-哦哦，有了老司机的指点，瞬间我就get到了王者的精髓，你看看我总结的打法:
+哦哦，确实简洁明了，有了老司机的指点，我的英雄选择困难症消失了，不久就可以get到了王者的精髓，你看看我总结的打法:
 
 ```kotlin
 fun KingGloryPlay(type: HeroType) = when(type)
-{ HeroType.tank ->"拉怪" 
-  HeroType.mage -> "输出&控制"
-  HeroType.assassin -> "输出"
+{ HeroType.tank -> "扛住🛡"
+  HeroType.mage -> "预判&控制⌛️"
+  HeroType.assassin -> "收割🔪"
   ...
 }
 ```
-哈哈哈，不说了，我要打排位去了。
 
 ***Swift***
 
@@ -198,7 +203,7 @@ fun KingGloryPlay(type: HeroType) = when(type)
 
 ***Kotlin***
 
-哈哈哈，一起开黑啊！
+哈哈哈，不说了，一起开黑啊，我也要试试打排位去！
 
 
 
