@@ -186,33 +186,18 @@ if case Hero.Luna(type: .assassin(let info)) = luna {
 
 
 ***Kotlin***
-<<<<<<< HEAD
+
 哦哦，确实简洁明了，有了老司机的指点，我的英雄选择困难症消失了，不久就可以get到了王者的精髓，你看看我总结的打法:
 
 ```kotlin
 fun KingGloryPlay(type: HeroType) = when(type)
-{ HeroType.tank -> "扛住🛡"
+{
+  HeroType.tank -> "扛住🛡"
   HeroType.mage -> "预判&控制⌛️"
   HeroType.assassin -> "收割🔪"
   ...
 }
 ```
-=======
-
-哦哦，有了老司机的指点，瞬间我就get到了王者的精髓，你看看我总结的打法:
-
-```kotlin
-fun KingGloryPlay(type: HeroType) = when(type)
-{ 
-  HeroType.tank ->"拉怪" 
-  HeroType.mage -> "输出&控制"
-  HeroType.assassin -> "输出"
-  ...
-}
-```
-
-哈哈哈，不说了，我要打排位去了。
->>>>>>> 1d0f213e069c4cf711f176f3b898ccc924273373
 
 ***Swift***
 
@@ -221,7 +206,6 @@ fun KingGloryPlay(type: HeroType) = when(type)
 ***Kotlin***
 
 哈哈哈，不说了，一起开黑啊，我也要试试打排位去！
-
 
 
 
