@@ -186,6 +186,7 @@ if case Hero.Luna(type: .assassin(let info)) = luna {
 
 
 ***Kotlin***
+<<<<<<< HEAD
 哦哦，确实简洁明了，有了老司机的指点，我的英雄选择困难症消失了，不久就可以get到了王者的精髓，你看看我总结的打法:
 
 ```kotlin
@@ -196,6 +197,22 @@ fun KingGloryPlay(type: HeroType) = when(type)
   ...
 }
 ```
+=======
+
+哦哦，有了老司机的指点，瞬间我就get到了王者的精髓，你看看我总结的打法:
+
+```kotlin
+fun KingGloryPlay(type: HeroType) = when(type)
+{ 
+  HeroType.tank ->"拉怪" 
+  HeroType.mage -> "输出&控制"
+  HeroType.assassin -> "输出"
+  ...
+}
+```
+
+哈哈哈，不说了，我要打排位去了。
+>>>>>>> 1d0f213e069c4cf711f176f3b898ccc924273373
 
 ***Swift***
 
@@ -410,7 +427,11 @@ let aTower = Desktop.Tower((20, "XcodeYang", .Traveling) as HumanInfo)
 let Cube = Desktop.Cube((21, "XcodeYang", .PlayGame))
 ```
 
-## 枚举 enum - kotlin
+枚举 kotlin
+==========
+
+## 举个例子
+kotlin 里的枚举可以和When操作符结合使用
 
 ```kotlin
 enum class Color(val r: Int, val g: Int, val b: Int) {
@@ -425,7 +446,7 @@ fun getWarmth(color: Color) = when(color)
 }
 ```
 
-### 枚举
+### 简单枚举
 枚举类的最基本的用法是实现类型安全的枚举，即 Week.Monday的形式（每一个枚举常量都是这个枚举类的实例而且不提供公开的构造方法）。
 
 ```kotlin
@@ -433,6 +454,8 @@ enum class Lang {
     PHP, Java, OC, Python, Ruby, Go, Swift, Kotlin
 }
 ```
+
+### 初始化
 枚举类的主构造函数默认是私有的。如果对每个枚举常数设置属性值，需在主构造函数里进行声明，并且在枚举常量处初始化
 
 ```kotlin
@@ -440,6 +463,8 @@ enum class Week(var i:int) {
     Monday(1), Tuesday(2), Wednesday(3), Thursday(4), Friday(5), Saturday(6),Sunday(0)
 }
 ```
+
+### 使用枚举常量
 就像在 Java 中一样，Kotlin 中的枚举类也有合成方法允许列出所有定义的枚举常量以及通过名称获取枚举常量
 
 ```kotlin
@@ -469,6 +494,7 @@ ordinal():Int //获取枚举值在所有枚举数组中定义的顺序
 Week.Monday.name //Monday
 Week.Monday.ordinal //1
 ```
+
 ### 匿名类与抽象方法
 在枚举类中声明了抽象方法，所有的枚举常量都应声明其匿名类，并在匿名类中实现枚举类中声明的抽象方法。
 
@@ -508,6 +534,7 @@ println("getPerson:${per.getPerson(1)}") // 打印：getPerson:TEACHER
 ```
 如果枚举类中定义了任何成员, 你需要用分号将枚举常数的定义与枚举类的成员定义分隔开.
 匿名内部类中声明的方法，并不能在外部使用，即使是其枚举类型的实例，也不可调用。但重写的枚举类中声明的方法，可以被其实例调用。
+
 ### 枚举类与接口
 枚举类实现接口的情况与抽象方法类似，所有的枚举常量都应在其匿名类中实现接口的方法
 
