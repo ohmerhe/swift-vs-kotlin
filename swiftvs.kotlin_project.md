@@ -69,7 +69,7 @@ banner: http://7xpox6.com1.z0.glb.clouddn.com/image/index-page-header-bg.jpg?ima
 
 ### 函数与表达式（包含内联函数）
 ### 高阶函数
-### 协同程序
+### 协程
 
 ## 语言特性
 
