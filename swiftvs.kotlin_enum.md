@@ -1,7 +1,9 @@
-# Swift vs. Kotlin 漫谈之枚举
+# Swift vs. Kotlin 漫谈系列之枚举
 
 
-`王者荣耀`
+《Swift vs. Kotlin 漫谈》系列经过一段时间已经有一些积累了，如果想要查看之前的漫谈系列，可以点击上面的 KotlinThree 关注我们的公众号，目录有之前的所有文章。
+
+# 技术漫谈（王者荣耀篇）
 
 
 ***Swift:***
@@ -26,7 +28,7 @@ Kotlin 君，我最近打王者荣耀排位上钻石了；
 
 定义一下游戏里的游戏角色：ADC，法师，刺客，坦克，战士，辅助
 
-```swift
+```
 enum KingGloryType {
     case Marksman, Mage, Assassin, Tank, Fighter, Support
 }
@@ -52,8 +54,7 @@ val myFavoriteHeroType: KingGloryType = KingGloryType.Fighter
 
 确实很像，但若是更根据做细分，Swift枚举可以支持枚举嵌套，也可以设置枚举值及类型（rawValue）
 
-```swift
-enum KingGloryType_II {
+```enum KingGloryType_II {
     enum Tank:String {
         case arthur = "亚瑟"
         case lvbu = "吕布"
@@ -122,7 +123,7 @@ printValueOf<Assassin>("雅典娜") //"雅典娜"
 
 好，我来定义一下英雄类型、难度及注意事项，适合新手挑选
 
-```swift
+```
 enum HeroType {
     case tank(difficulty: Float)
     case mage(difficulty: Float, reason: String)
@@ -137,7 +138,7 @@ enum RecommendHero: str {
 
 实现一个推荐英雄及辨识他的方法
 
-```swift
+```
 let luna = Hero.Luna(type: .assassin(difficulty: 0.9, reason:"不可断大，月下无限连"))
 
 if case Hero.Luna(type: .assassin(let difficulty, let reason)) = luna {
@@ -161,8 +162,7 @@ Swift的`if case` 取值和`if let`是一样的，和guard模式差不多，不�
 
 倘若要是参数再多几个的话，会直接影响代码书写和阅读，优化方案可以加入元组
 
-```swift
-// 设置元组，多参数替换成单一参数
+```// 设置元组，多参数替换成单一参数
 typealias DifficultyInfo = (difficulty: Float, reason: String)
 
 enum HeroType {
@@ -208,17 +208,17 @@ fun KingGloryPlay(type: HeroType) = when(type)
 哈哈哈，不说了，一起开黑啊，我也要试试打排位去！
 
 
+# 技术知识 🇨🇳 😎
 
+## Swift  
 
-枚举 🇨🇳 😎
-==========
 > 枚举的强大犹如Stuct一般,这里做简单介绍（包括协议、拓展等和struct相同的知识点以后一起串讲）
 
 ### 枚举：简单枚举
 
 基础枚举
 
-```swift
+```
 enum LOL {
     case Marksman, Mage, Assassin, Tank, Fighter, Support
 }
@@ -228,7 +228,7 @@ let myHero: LOL = .Marksman
 
 在 C 语言中，枚举会为一组整型值分配相关联的名称。Swift 中的枚举更加灵活，不必给每一个枚举成员提供一个值。如果给枚举成员提供一个值（称为“原始”值），则该值的类型可以是字符串，字符，或是一个整型值或浮点数。
 
-```swift
+```
 enum Tank:String {
     case arthur = "亚瑟"
     case lvbu = "吕布"
@@ -252,7 +252,7 @@ default:
 
 枚举里嵌套枚举，和类中嵌套类，方法中嵌套方法是一样可行；
 
-```swift
+```
 enum LOL_II {
     enum Tank:String {
         case arthur = "亚瑟"
@@ -279,7 +279,7 @@ myHeroII.rawValue
 
 例子1：王者荣耀英雄
 
-```swift
+```
 enum HeroType {
     case tank(difficulty: Float)
     case mage(difficulty: Float)
@@ -300,7 +300,7 @@ if case Hero.Luna(type: .assassin(let difficulty)) = luna {
 
 例子2：家庭成员
 
-```swift
+```
 enum FamilyType {
     case father(age: Int)
     case mother(age: Int)
@@ -331,7 +331,7 @@ let motherGift = mother.gift
 
 ### 枚举取值的方法
 
-```swift
+```
 //: 常见的
 switch sister {
 case .father(let age):
@@ -349,7 +349,7 @@ if case .sister(let age) = sister {
 ### 枚举的初始化方法
 枚举构造器
 
-```swift
+```
 enum AppleDevice {
     case iMac(price:Int)
     case iPod(price:Int)
@@ -370,7 +370,7 @@ let myDevice = AppleDevice(costMoney: 6000)
 ### switch对象或元祖
 > switch方法可以执行辨别两个对象，或者元组
 
-```swift 
+```
 var myIPhone6s = AppleDevice.iPhone(price: 6088)
 var myIPhone4s = AppleDevice.iPhone(price: 2000)
 
@@ -389,11 +389,11 @@ func sameDevice(_ firstDevice: AppleDevice, secondDevice: AppleDevice) -> Bool {
 print(sameDevice(myIPhone6s, secondDevice: myIPhone4s))
 ```
 
-元祖结合
--------
+### 元祖结合
+
 多元方式组合枚举
 
-```swift
+```
 enum HumanHabit {
     case Reading
     case PlayGame
@@ -411,10 +411,10 @@ let aTower = Desktop.Tower((20, "XcodeYang", .Traveling) as HumanInfo)
 let Cube = Desktop.Cube((21, "XcodeYang", .PlayGame))
 ```
 
-枚举 kotlin
-==========
+## kotlin
 
-## 举个例子
+
+### 举个例子
 kotlin 里的枚举可以和When操作符结合使用
 
 ```kotlin
@@ -550,6 +550,7 @@ enum class Person(var type: Int): onClickListener{
 
 ### 密封类
 在使用When表达式的时候，编译器会检查default选项，所以我们常常需要加上else来防止出现其他情况，像这样
+
 ```kotlin
 interface Expr
 class Num(val value: Int) : Expr
@@ -566,6 +567,7 @@ throw IllegalArgumentException("Unknown expression")
 
 密封类很好的解决了这个问题
 虽然密封类也可以有子类，但是所有子类都必须在与密封类自身相同的文件中声明
+
 ```kotlin
 sealed class Expr {          //要声明一个密封类，需要在类名前面添加 sealed 修饰符。
 class Num(val value: Int) : Expr()
@@ -578,5 +580,6 @@ is Expr.Sum -> eval(e.right) + eval(e.left)
 // 不再需要 `else` 子句，因为我们已经覆盖了所有的情况
 }
 ```
+
 使用密封类的关键好处在于使用 when 表达式 的时候，如果能够验证语句覆盖了所有情况，就不需要为该语句再添加一个 else 子句了。
 请注意，扩展密封类子类的类（间接继承者）可以放在任何位置，而无需在同一个文件中
