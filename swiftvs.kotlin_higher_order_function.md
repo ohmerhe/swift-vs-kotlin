@@ -161,5 +161,176 @@ html {       // 带接收者的 lambda 由此开始
 }
 ```
 
+## Swift
 
+### 函数类型
 
+每个函数都有种特定的函数类型，函数的类型由函数的参数类型和返回类型组成。例如：
+
+```
+func addTwoInts(_ a: Int, _ b: Int) -> Int {
+    return a + b
+}
+func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
+    return a * b
+}
+``` 
+这两个函数的类型是 (Int, Int) -> Int。
+
+### 使用函数类型
+
+在 Swift 中，使用函数类型就像使用其他类型一样。例如，你可以定义一个类型为函数的常量或变量，并将适当的函数赋值给它：
+
+```
+var mathFunction: (Int, Int) -> Int = addTwoInts
+```
+addTwoInts 和 mathFunction 有同样的类型，所以这个赋值过程在 Swift 类型检查(type-check)中是允许的。
+现在，你可以用 mathFunction 来调用被赋值的函数了：
+
+```
+mathFunction = multiplyTwoInts
+print("Result: \(mathFunction(2, 3))")
+// Prints "Result: 6"
+```
+
+### 函数类型作为参数类型
+
+你可以用 (Int, Int) -> Int 这样的函数类型作为另一个函数的参数类型。这样你可以将函数的一部分实现留给函数的调用者来提供。
+
+```
+func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
+    print("Result: \(mathFunction(a, b))")
+}
+printMathResult(addTwoInts, 3, 5)
+// 打印 "Result: 8"
+```
+### 函数类型作为返回类型
+
+你可以用函数类型作为另一个函数的返回类型。你需要做的是在返回箭头（->）后写一个完整的函数类型。
+
+```
+func stepForward(_ input: Int) -> Int {
+    return input + 1
+}
+func stepBackward(_ input: Int) -> Int {
+    return input - 1
+}
+func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+    return backward ? stepBackward : stepForward
+}
+var currentValue = 3
+let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
+// moveNearerToZero 现在指向 stepBackward() 函数。
+```
+
+### 嵌套函数
+
+你也可以把函数定义在别的函数体中，称作 嵌套函数（nested functions）。
+
+你可以用返回嵌套函数的方式重写 chooseStepFunction(backward:) 函数：
+
+```
+func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+    func stepForward(input: Int) -> Int { return input + 1 }
+    func stepBackward(input: Int) -> Int { return input - 1 }
+    return backward ? stepBackward : stepForward
+}
+```
+
+### 闭包表达式
+
+闭包是自包含的函数代码块，可以在代码中被传递和使用。Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他一些编程语言中的匿名函数比较相似。
+闭包可以捕获和存储其所在上下文中任意常量和变量的引用。
+
+闭包表达式的形式如下：
+
+```
+{ (parameters) -> return type in
+    statements
+}
+```
+
+下面的闭包表达式示例使用 sorted(by:) 方法对一个 String 类型的数组进行字母逆序排序。
+
+```
+let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+var reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
+    return s1 > s2
+})
+```
+
+### 根据上下文推断类型
+
+实际上，通过内联闭包表达式构造的闭包作为参数传递给函数或方法时，总是能够推断出闭包的参数和返回值类型。这意味着闭包作为函数或者方法的参数时，你几乎不需要利用完整格式构造内联闭包。
+
+```
+var reversedNames = names.sorted(by: { s1, s2 in return s1 > s2 } )
+```
+
+### 单表达式闭包隐式返回
+
+单行表达式闭包可以通过省略 return 关键字来隐式返回单行表达式的结果，如上版本的例子可以改写为：
+
+```
+var reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
+```
+
+### 参数名称缩写
+
+`Swift` 自动为内联闭包提供了参数名称缩写功能，你可以直接通过 `$0`，`$1`，`$2` 来顺序调用闭包的参数，以此类推。
+
+如果你在闭包表达式中使用参数名称缩写，你可以在闭包定义中省略参数列表，并且对应参数名称缩写的类型会通过函数类型进行推断。`in` 关键字也同样可以被省略，因为此时闭包表达式完全由闭包函数体构成：
+
+```
+var reversedNames = names.sorted(by: { $0 > $1 } )
+```
+### 运算符方法
+
+实际上还有一种更简短的方式来编写上面例子中的闭包表达式。Swift 的 String 类型定义了关于大于号（>）的字符串实现，其作为一个函数接受两个 String 类型的参数并返回 Bool 类型的值。而这正好与 sorted(by:) 方法的参数需要的函数类型相符合。因此，你可以简单地传递一个大于号，Swift 可以自动推断出你想使用大于号的字符串函数实现：
+
+```
+var reversedNames = names.sorted(by: >)
+```
+
+### 尾随闭包
+
+尾随闭包是一个书写在函数括号之后的闭包表达式，函数支持将其作为最后一个参数调用。在使用尾随闭包时，你不用写出它的参数标签：
+
+```
+func someFunctionThatTakesAClosure(closure: () -> Void) {
+    // 函数体部分
+}
+
+// 以下是不使用尾随闭包进行函数调用
+someFunctionThatTakesAClosure(closure: {
+    // 闭包主体部分
+})
+
+// 以下是使用尾随闭包进行函数调用
+someFunctionThatTakesAClosure() {
+    // 闭包主体部分
+}
+```
+
+因此上面排序闭包可以采用尾随闭包改写为：
+
+```
+var reversedNames = names.sorted() { $0 > $1 }
+```
+如果闭包表达式是函数或方法的唯一参数，则当你使用尾随闭包时，你甚至可以把 () 省略掉：
+
+```
+var reversedNames = names.sorted { $0 > $1 }
+```
+
+### 逃逸闭包
+
+当一个闭包作为参数传到一个函数中，但是这个闭包在函数返回之后才被执行，我们称该闭包从函数中逃逸。当你定义接受闭包作为参数的函数时，你可以在参数名之前标注 `@escaping`，用来指明这个闭包是允许“逃逸”出这个函数的。
+
+```
+var completionHandlers: [() -> Void] = []
+func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+    completionHandlers.append(completionHandler)
+}
+```
+`someFunctionWithEscapingClosure(_:)` 函数接受一个闭包作为参数，该闭包被添加到一个函数外定义的数组中。如果你不将这个参数标记为 `@escaping`，就会得到一个编译错误。
