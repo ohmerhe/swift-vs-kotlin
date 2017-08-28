@@ -101,8 +101,8 @@ printAllValues<Mage>() //"安其拉","火舞"
 printAllValues<Assassin>() //"雅典娜","露娜"
 
 printValueOf<Tank>("亚瑟") //"亚瑟"
-printValueOf<Tank>("火舞") //"火舞"
-printValueOf<Tank>("雅典娜") //"雅典娜"
+printValueOf<Mage>("火舞") //"火舞"
+printValueOf<Assassin>("雅典娜") //"雅典娜"
 
 }
 
